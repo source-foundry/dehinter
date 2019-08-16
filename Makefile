@@ -7,7 +7,7 @@ dist-build: clean
 	python3 setup.py sdist bdist_wheel
 
 dist-push:
-	twine upload dist/*.whl dist/*.zip
+	twine upload dist/*.whl dist/*.tar.gz
 
 install:
 	pip3 install --ignore-installed -r requirements.txt .
