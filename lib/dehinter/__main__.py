@@ -30,7 +30,7 @@ def main():
         sys.exit(1)
 
     # argparse parser
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description="A tool for the removal of TrueType instruction sets (hints) in fonts")
     parser.add_argument(
         "-v", "--version", help="display version number", action="store_true"
     )
