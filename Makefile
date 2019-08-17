@@ -18,8 +18,7 @@ install-dev:
 install-user:
 	pip3 install --ignore-installed --user .
 
-test: test-lint test-type-check
-	tox
+test: test-lint test-type-check test-unit
 
 test-coverage:
 	coverage run --source dehinter -m py.test
@@ -32,7 +31,10 @@ test-lint:
 test-type-check:
 	pytype lib/dehinter
 
+test-unit:
+	tox
+
 uninstall:
 	pip3 uninstall --yes fontelemetry
 
-.PHONY: all clean dist-build dist-push install install-dev install-user test test-lint test-type-check uninstall
+.PHONY: all clean dist-build dist-push install install-dev install-user test test-lint test-type-check test-unit uninstall
