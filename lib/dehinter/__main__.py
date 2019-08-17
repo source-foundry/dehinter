@@ -16,8 +16,12 @@ import argparse
 import os
 import sys
 
+from fontTools.ttLib import TTFont
+
 from dehinter import __version__
 from dehinter.font import is_truetype_font
+from dehinter.font import has_cvt_table, has_fpgm_table, has_prep_table
+from dehinter.font import remove_cvt, remove_fpgm, remove_prep
 from dehinter.paths import filepath_exists
 
 
@@ -51,6 +55,26 @@ def main():
         sys.stderr.write("[!] Error: '{}' does not appear to be a TrueType font file.{}".format(args.INFILE, os.linesep))
         sys.stderr.write("[!] Request canceled.{}".format(os.linesep))
         sys.exit(1)
+
+    # Execution
+    # ---------
+    #  (1) Unnecessary OpenType table removal
+    try:
+        tt = TTFont(args.INFILE)
+    except Exception as e:
+        sys.stderr.write("[!] Error: Unable to create font object with '{}' -> {}".format(args.INFILE, str(e)))
+
+    if has_cvt_table(tt):
+        tt = remove_cvt(tt)
+        print("[-] Removed cvt table")
+
+    if has_fpgm_table(tt):
+        tt = remove_fpgm(tt)
+        print("[-] Removed fpgm table")
+
+    if has_prep_table(tt):
+        tt = remove_prep(tt)
+        print("[-] Removed prep table")
 
 
 if __name__ == "__main__":
