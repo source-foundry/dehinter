@@ -20,11 +20,8 @@ from dehinter import __version__
 from dehinter.font import is_truetype_font
 from dehinter.paths import filepath_exists
 
-import fontTools
-
 
 def main():
-    argv = sys.argv
 
     # ===========================================================
     # argparse command line argument definitions
@@ -54,8 +51,6 @@ def main():
         sys.stderr.write("[!] Error: '{}' does not appear to be a TrueType font file.{}".format(args.INFILE, os.linesep))
         sys.stderr.write("[!] Request canceled.{}".format(os.linesep))
         sys.exit(1)
-
-
 
 
 if __name__ == "__main__":
