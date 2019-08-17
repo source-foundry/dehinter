@@ -107,3 +107,6 @@ venv.bak/
 
 # PyCharm
 .idea
+
+# pytype
+.pytype
