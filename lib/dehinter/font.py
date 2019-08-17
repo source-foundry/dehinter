@@ -13,11 +13,65 @@
 # limitations under the License.
 
 
+# ========================================================
+# Utilities
+# ========================================================
+def has_cvt_table(tt):
+    """Tests for the presence of a cvt table in a TrueType font."""
+    return "cvt " in tt
+
+
+def has_fpgm_table(tt):
+    """Tests for the presence of a fpgm table in a TrueType font."""
+    return "fpgm" in tt
+
+
+def has_prep_table(tt):
+    """Tests for the presence of a prep table in a TrueType font."""
+    return "prep" in tt
+
+
 def is_truetype_font(filepath):
-    """Confirms has the TrueType file signature of either:
+    """Tests that a font has the TrueType file signature of either:
          1) b'\x00\x01\x00\x00'
          2) b'\x74\x72\x75\x65' == 'true'"""
     with open(filepath, 'rb') as f:
         file_signature = f.read(4)
 
         return file_signature in (b'\x00\x01\x00\x00', b'\x74\x72\x75\x65')
+
+
+# ========================================================
+# OpenType table removal
+# ========================================================
+def remove_cvt(tt):
+    """Removes cvt table from a fontTools.ttLib.TTFont object"""
+    try:
+        del tt["cvt "]
+    except KeyError:
+        # return unmodified font if table is not present in the font
+        pass
+
+    return tt
+
+
+def remove_fpgm(tt):
+    """Removes fpgm table from a fontTools.ttLib.TTFont object"""
+    try:
+        del tt["fpgm"]
+    except KeyError:
+        # return unmodified font if table is not present in the font
+        pass
+
+    return tt
+
+
+def remove_prep(tt):
+    """Removes prep table from a fontTools.ttLib.TTFont object"""
+    try:
+        del tt["prep"]
+    except KeyError:
+        # return unmodified font if table is not present in the font
+        pass
+
+    return tt
