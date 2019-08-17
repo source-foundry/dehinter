@@ -24,7 +24,7 @@ test: test-lint test-type-check
 test-coverage:
 	coverage run --source dehinter -m py.test
 	coverage report -m
-	coverage html
+#	coverage html
 
 test-lint:
 	flake8 --ignore=E501,W50 lib/dehinter
