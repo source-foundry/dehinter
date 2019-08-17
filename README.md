@@ -1,5 +1,7 @@
 # dehinter
 
+[![Build Status](https://travis-ci.org/source-foundry/dehinter.svg?branch=master)](https://travis-ci.org/source-foundry/dehinter)
+
 
 ## License
 
