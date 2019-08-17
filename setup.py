@@ -10,7 +10,7 @@ LICENSE = "Apache License v2.0"
 URL = "https://github.com/source-foundry/dehinter"
 EMAIL = "chris@sourcefoundry.org"
 AUTHOR = "Source Foundry Authors and Contributors"
-REQUIRES_PYTHON = ">=3.6.0"
+REQUIRES_PYTHON = ">=3.5.0"
 
 INSTALL_REQUIRES = ["fontTools==3.44.0",
                     ]
