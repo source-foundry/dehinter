@@ -17,30 +17,45 @@ import os
 import sys
 
 from dehinter import __version__
+from dehinter.font import is_truetype_font
+from dehinter.paths import filepath_exists
 
 import fontTools
 
 
 def main():
     argv = sys.argv
-    if len(argv) == 1:
-        sys.stderr.write(
-            "[ERROR] Missing arguments to dehinter!{}".format(os.linesep)
-        )
-        sys.exit(1)
 
-    # argparse parser
+    # ===========================================================
+    # argparse command line argument definitions
+    # ===========================================================
+    # TODO: add support for options to keep cvt, prep, and fpgm tables
     parser = argparse.ArgumentParser(description="A tool for the removal of TrueType instruction sets (hints) in fonts")
-    parser.add_argument(
-        "-v", "--version", help="display version number", action="store_true"
-    )
+    parser.add_argument("--version", action="version",
+                        version="dehinter v{}".format(__version__))
+    parser.add_argument("-o", "--out", help="out file path (dehinted font)")
+    parser.add_argument("INFILE", help="in file path (hinted font)")
 
     args = parser.parse_args()
 
-    # command line logic implementation
-    if args.version:
-        print("dehinter v{}".format(__version__))
-        sys.exit(0)
+    # ===========================================================
+    # Command line logic
+    # ===========================================================
+    #
+    # Validations
+    # -----------
+    #  (1) file path request is a file
+    if not filepath_exists(args.INFILE):
+        sys.stderr.write("[!] Error: '{}' is not a valid file path.{}".format(args.INFILE, os.linesep))
+        sys.stderr.write("[!] Request canceled.{}".format(os.linesep))
+        sys.exit(1)
+    #  (2) the file is a ttf font file (based on the 4 byte file signature
+    if not is_truetype_font(args.INFILE):
+        sys.stderr.write("[!] Error: '{}' does not appear to be a TrueType font file.{}".format(args.INFILE, os.linesep))
+        sys.stderr.write("[!] Request canceled.{}".format(os.linesep))
+        sys.exit(1)
+
+
 
 
 if __name__ == "__main__":
