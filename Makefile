@@ -18,10 +18,16 @@ install-dev:
 install-user:
 	pip3 install --ignore-installed --user .
 
-test:
-	./testrunner.sh
+test: test-lint test-type-check
+	tox
+
+test-lint:
+	flake8 --ignore=E501,W50 lib/dehinter
+
+test-type-check:
+	pytype lib/dehinter
 
 uninstall:
 	pip3 uninstall --yes fontelemetry
 
-.PHONY: all clean dist-build dist-push install install-dev install-user test uninstall
+.PHONY: all clean dist-build dist-push install install-dev install-user test test-lint test-type-check uninstall
