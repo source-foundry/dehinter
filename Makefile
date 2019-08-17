@@ -21,6 +21,11 @@ install-user:
 test: test-lint test-type-check
 	tox
 
+test-coverage:
+	coverage run --source dehinter -m py.test
+	coverage report -m
+	coverage html
+
 test-lint:
 	flake8 --ignore=E501,W50 lib/dehinter
 
