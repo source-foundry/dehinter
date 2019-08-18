@@ -63,6 +63,7 @@ def main():
         tt = TTFont(args.INFILE)
     except Exception as e:
         sys.stderr.write("[!] Error: Unable to create font object with '{}' -> {}".format(args.INFILE, str(e)))
+        sys.exit(1)
 
     if has_cvt_table(tt):
         remove_cvt(tt)
@@ -84,6 +85,8 @@ def main():
             print("[-] Removed prep table")
         else:
             sys.stderr.write("[!] Error: failed to remove prep table from font")
+
+    #  (2) Remove glyf table instruction set bytecode
 
 
 if __name__ == "__main__":
