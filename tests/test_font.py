@@ -1,6 +1,7 @@
 import os
 
 from dehinter.font import is_truetype_font, has_cvt_table, has_fpgm_table, has_prep_table
+from dehinter.font import remove_cvt, remove_fpgm, remove_prep
 
 import pytest
 from fontTools.ttLib import TTFont
@@ -46,3 +47,46 @@ def test_is_truetype_font_for_ttf():
 
 def test_is_truetype_font_for_not_ttf():
     assert is_truetype_font(FILEPATH_TEST_TEXT) is False
+
+
+def test_delete_cvt_table():
+    tt = TTFont(FILEPATH_HINTED_TTF)
+    assert ("cvt " in tt) is True
+    remove_cvt(tt)
+    assert ("cvt " in tt) is False
+
+
+def test_delete_cvt_table_missing_table():
+    tt = TTFont(FILEPATH_DEHINTED_TTF)
+    assert ("cvt " in tt) is False
+    remove_cvt(tt)
+    assert ("cvt " in tt) is False
+
+
+def test_delete_fpgm_table():
+    tt = TTFont(FILEPATH_HINTED_TTF)
+    assert ("fpgm" in tt) is True
+    remove_fpgm(tt)
+    assert ("fpgm" in tt) is False
+
+
+def test_delete_fpgm_table_missing_table():
+    tt = TTFont(FILEPATH_DEHINTED_TTF)
+    assert ("fpgm" in tt) is False
+    remove_fpgm(tt)
+    assert ("fpgm" in tt) is False
+
+
+def test_delete_prep_table():
+    tt = TTFont(FILEPATH_HINTED_TTF)
+    assert ("prep" in tt) is True
+    remove_prep(tt)
+    assert ("prep" in tt) is False
+
+
+def test_delete_prep_table_missing_table():
+    tt = TTFont(FILEPATH_DEHINTED_TTF)
+    assert ("prep" in tt) is False
+    remove_prep(tt)
+    assert ("prep" in tt) is False
+
