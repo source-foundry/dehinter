@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# import array
+import array
 
 
 # ========================================================
@@ -71,3 +71,16 @@ def remove_prep(tt):
     except KeyError:
         # return unmodified font if table is not present in the font
         pass
+
+
+# ========================================================
+# glyf table instruction set bytecode removal
+# ========================================================
+def remove_glyf_instructions(tt):
+    glyph_number = 0
+    for glyph in tt['glyf'].glyphs.values():
+        glyph.expand(tt['glyf'])
+        if hasattr(glyph, "program"):
+            glyph.program.bytecode = array.array("B", [])
+            glyph_number += 1
+    return glyph_number

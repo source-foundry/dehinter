@@ -21,7 +21,7 @@ from fontTools.ttLib import TTFont
 from dehinter import __version__
 from dehinter.font import is_truetype_font
 from dehinter.font import has_cvt_table, has_fpgm_table, has_prep_table
-from dehinter.font import remove_cvt, remove_fpgm, remove_prep
+from dehinter.font import remove_cvt, remove_fpgm, remove_prep, remove_glyf_instructions
 from dehinter.paths import filepath_exists
 
 
@@ -87,6 +87,9 @@ def main():
             sys.stderr.write("[!] Error: failed to remove prep table from font")
 
     #  (2) Remove glyf table instruction set bytecode
+    number_glyfs_edited = remove_glyf_instructions(tt)
+    if number_glyfs_edited > 0:
+        print("[-] Removed glyf table instruction bytecode from {} glyphs".format(number_glyfs_edited))
 
 
 if __name__ == "__main__":
