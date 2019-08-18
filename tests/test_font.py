@@ -101,9 +101,14 @@ def test_delete_prep_table_missing_table():
 # ========================================================
 # glyf table instruction set bytecode removal
 # ========================================================
-def test_remove_glyf_instructions():
+def test_remove_glyf_instructions_hinted_font():
     tt = TTFont(FILEPATH_HINTED_TTF)
     number_removed = remove_glyf_instructions(tt)
     assert number_removed == 1554
 
+
+def test_remove_glyf_instructions_dehinted_font():
+    tt = TTFont(FILEPATH_DEHINTED_TTF)
+    number_removed = remove_glyf_instructions(tt)
+    assert number_removed == 0
 
