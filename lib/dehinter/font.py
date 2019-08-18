@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# import array
+
 
 # ========================================================
 # Utilities
@@ -52,8 +54,6 @@ def remove_cvt(tt):
         # return unmodified font if table is not present in the font
         pass
 
-    return tt
-
 
 def remove_fpgm(tt):
     """Removes fpgm table from a fontTools.ttLib.TTFont object"""
@@ -63,8 +63,6 @@ def remove_fpgm(tt):
         # return unmodified font if table is not present in the font
         pass
 
-    return tt
-
 
 def remove_prep(tt):
     """Removes prep table from a fontTools.ttLib.TTFont object"""
@@ -73,5 +71,3 @@ def remove_prep(tt):
     except KeyError:
         # return unmodified font if table is not present in the font
         pass
-
-    return tt
