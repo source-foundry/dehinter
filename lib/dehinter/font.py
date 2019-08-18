@@ -80,7 +80,7 @@ def remove_glyf_instructions(tt):
     glyph_number = 0
     for glyph in tt['glyf'].glyphs.values():
         glyph.expand(tt['glyf'])
-        if hasattr(glyph, "program"):
+        if hasattr(glyph, "program") and glyph.program.bytecode != array.array("B", []):
             glyph.program.bytecode = array.array("B", [])
             glyph_number += 1
     return glyph_number
