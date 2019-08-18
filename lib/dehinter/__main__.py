@@ -65,16 +65,25 @@ def main():
         sys.stderr.write("[!] Error: Unable to create font object with '{}' -> {}".format(args.INFILE, str(e)))
 
     if has_cvt_table(tt):
-        tt = remove_cvt(tt)
-        print("[-] Removed cvt table")
+        remove_cvt(tt)
+        if not has_cvt_table(tt):
+            print("[-] Removed cvt table")
+        else:
+            sys.stderr.write("[!] Error: failed to remove cvt table from font")
 
     if has_fpgm_table(tt):
-        tt = remove_fpgm(tt)
-        print("[-] Removed fpgm table")
+        remove_fpgm(tt)
+        if not has_fpgm_table(tt):
+            print("[-] Removed fpgm table")
+        else:
+            sys.stderr.write("[!] Error: failed to remove fpgm table from font")
 
     if has_prep_table(tt):
-        tt = remove_prep(tt)
-        print("[-] Removed prep table")
+        remove_prep(tt)
+        if not has_prep_table(tt):
+            print("[-] Removed prep table")
+        else:
+            sys.stderr.write("[!] Error: failed to remove prep table from font")
 
 
 if __name__ == "__main__":
