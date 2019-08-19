@@ -52,10 +52,10 @@ def is_truetype_font(filepath):
     """Tests that a font has the TrueType file signature of either:
          1) b'\x00\x01\x00\x00'
          2) b'\x74\x72\x75\x65' == 'true'"""
-    with open(filepath, 'rb') as f:
+    with open(filepath, "rb") as f:
         file_signature = f.read(4)
 
-        return file_signature in (b'\x00\x01\x00\x00', b'\x74\x72\x75\x65')
+        return file_signature in (b"\x00\x01\x00\x00", b"\x74\x72\x75\x65")
 
 
 # ========================================================
@@ -113,8 +113,8 @@ def remove_prep_table(tt):
 def remove_glyf_instructions(tt):
     """Removes instruction set bytecode from glyph definitions in the glyf table."""
     glyph_number = 0
-    for glyph in tt['glyf'].glyphs.values():
-        glyph.expand(tt['glyf'])
+    for glyph in tt["glyf"].glyphs.values():
+        glyph.expand(tt["glyf"])
         if hasattr(glyph, "program") and glyph.program.bytecode != array.array("B", []):
             glyph.program.bytecode = array.array("B", [])
             glyph_number += 1

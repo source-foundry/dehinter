@@ -21,8 +21,22 @@ from fontTools.ttLib import TTFont
 
 from dehinter import __version__
 from dehinter.font import is_truetype_font
-from dehinter.font import has_cvt_table, has_fpgm_table, has_gasp_table, has_hdmx_table, has_ltsh_table, has_prep_table
-from dehinter.font import remove_cvt_table, remove_fpgm_table, remove_hdmx_table, remove_ltsh_table, remove_prep_table, remove_glyf_instructions
+from dehinter.font import (
+    has_cvt_table,
+    has_fpgm_table,
+    has_gasp_table,
+    has_hdmx_table,
+    has_ltsh_table,
+    has_prep_table,
+)
+from dehinter.font import (
+    remove_cvt_table,
+    remove_fpgm_table,
+    remove_hdmx_table,
+    remove_ltsh_table,
+    remove_prep_table,
+    remove_glyf_instructions,
+)
 from dehinter.font import update_gasp_table, update_maxp_table
 from dehinter.paths import filepath_exists
 
@@ -35,9 +49,12 @@ def main():
     # argparse command line argument definitions
     # ===========================================================
     # TODO: add support for options to keep individual tables that are removed by default
-    parser = argparse.ArgumentParser(description="A tool for the removal of TrueType instruction sets (hints) in fonts")
-    parser.add_argument("--version", action="version",
-                        version="dehinter v{}".format(__version__))
+    parser = argparse.ArgumentParser(
+        description="A tool for the removal of TrueType instruction sets (hints) in fonts"
+    )
+    parser.add_argument(
+        "--version", action="version", version="dehinter v{}".format(__version__)
+    )
     parser.add_argument("-o", "--out", help="out file path (dehinted font)")
     parser.add_argument("INFILE", help="in file path (hinted font)")
 
@@ -51,12 +68,20 @@ def main():
     # -----------
     #  (1) file path request is a file
     if not filepath_exists(args.INFILE):
-        sys.stderr.write("[!] Error: '{}' is not a valid file path.{}".format(args.INFILE, os.linesep))
+        sys.stderr.write(
+            "[!] Error: '{}' is not a valid file path.{}".format(
+                args.INFILE, os.linesep
+            )
+        )
         sys.stderr.write("[!] Request canceled.{}".format(os.linesep))
         sys.exit(1)
     #  (2) the file is a ttf font file (based on the 4 byte file signature
     if not is_truetype_font(args.INFILE):
-        sys.stderr.write("[!] Error: '{}' does not appear to be a TrueType font file.{}".format(args.INFILE, os.linesep))
+        sys.stderr.write(
+            "[!] Error: '{}' does not appear to be a TrueType font file.{}".format(
+                args.INFILE, os.linesep
+            )
+        )
         sys.stderr.write("[!] Request canceled.{}".format(os.linesep))
         sys.exit(1)
 
@@ -66,7 +91,11 @@ def main():
     try:
         tt = TTFont(args.INFILE)
     except Exception as e:
-        sys.stderr.write("[!] Error: Unable to create font object with '{}' -> {}".format(args.INFILE, str(e)))
+        sys.stderr.write(
+            "[!] Error: Unable to create font object with '{}' -> {}".format(
+                args.INFILE, str(e)
+            )
+        )
         sys.exit(1)
 
     if has_cvt_table(tt):
@@ -107,16 +136,28 @@ def main():
     #  (2) Remove glyf table instruction set bytecode
     number_glyfs_edited = remove_glyf_instructions(tt)
     if number_glyfs_edited > 0:
-        print("[-] Removed glyf table instruction bytecode from {} glyphs".format(number_glyfs_edited))
+        print(
+            "[-] Removed glyf table instruction bytecode from {} glyphs".format(
+                number_glyfs_edited
+            )
+        )
 
     #  (3) Edit gasp table
     if has_gasp_table(tt):
         if update_gasp_table(tt):
-            print("[Δ] New gasp table values:{}    {}".format(os.linesep, pp.pformat(tt["gasp"].__dict__)))
+            print(
+                "[Δ] New gasp table values:{}    {}".format(
+                    os.linesep, pp.pformat(tt["gasp"].__dict__)
+                )
+            )
 
     #  (4) Edit maxp table
     if update_maxp_table(tt):
-        print("[Δ] New maxp table values:{}    {}".format(os.linesep, pp.pformat(tt["maxp"].__dict__)))
+        print(
+            "[Δ] New maxp table values:{}    {}".format(
+                os.linesep, pp.pformat(tt["maxp"].__dict__)
+            )
+        )
 
 
 if __name__ == "__main__":
