@@ -78,6 +78,7 @@ def remove_prep(tt):
 # glyf table instruction set bytecode removal
 # ========================================================
 def remove_glyf_instructions(tt):
+    """Removes instruction set bytecode from glyph definitions in the glyf table."""
     glyph_number = 0
     for glyph in tt['glyf'].glyphs.values():
         glyph.expand(tt['glyf'])
@@ -108,6 +109,7 @@ def update_gasp_table(tt):
 # maxp table edits
 # =========================================
 def update_maxp_table(tt):
+    """Update the maxp table with new values based on elimination of instruction sets."""
     changed = False
     if tt["maxp"].maxZones != 0:
         tt["maxp"].maxZones = 0
