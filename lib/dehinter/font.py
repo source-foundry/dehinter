@@ -107,26 +107,23 @@ def update_gasp_table(tt):
 # maxp table edits
 # =========================================
 def update_maxp_table(tt):
-    if "maxp" in tt:
-        changed = False
-        if tt["maxp"].maxZones != 0:
-            tt["maxp"].maxZones = 0
-            changed = True
-        if tt["maxp"].maxTwilightPoints != 0:
-            tt["maxp"].maxTwilightPoints = 0
-            changed = True
-        if tt["maxp"].maxStorage != 0:
-            tt["maxp"].maxStorage = 0
-            changed = True
-        if tt["maxp"].maxFunctionDefs != 0:
-            tt["maxp"].maxFunctionDefs = 0
-            changed = True
-        if tt["maxp"].maxStackElements != 0:
-            tt["maxp"].maxStackElements = 0
-            changed = True
-        if tt["maxp"].maxSizeOfInstructions != 0:
-            tt["maxp"].maxSizeOfInstructions = 0
-            changed = True
-        return changed
-    else:
-        return False
+    changed = False
+    if tt["maxp"].maxZones != 0:
+        tt["maxp"].maxZones = 0
+        changed = True
+    if tt["maxp"].maxTwilightPoints != 0:
+        tt["maxp"].maxTwilightPoints = 0
+        changed = True
+    if tt["maxp"].maxStorage != 0:
+        tt["maxp"].maxStorage = 0
+        changed = True
+    if tt["maxp"].maxFunctionDefs != 0:
+        tt["maxp"].maxFunctionDefs = 0
+        changed = True
+    if tt["maxp"].maxStackElements != 0:
+        tt["maxp"].maxStackElements = 0
+        changed = True
+    if tt["maxp"].maxSizeOfInstructions != 0:
+        tt["maxp"].maxSizeOfInstructions = 0
+        changed = True
+    return changed
