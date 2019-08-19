@@ -2,7 +2,7 @@ import os
 
 from dehinter.font import is_truetype_font, has_cvt_table, has_fpgm_table, has_prep_table
 from dehinter.font import remove_cvt, remove_fpgm, remove_prep, remove_glyf_instructions
-from dehinter.font import update_gasp_table
+from dehinter.font import update_gasp_table, update_maxp_table
 
 import pytest
 from fontTools.ttLib import TTFont
@@ -115,9 +115,23 @@ def test_remove_glyf_instructions_dehinted_font():
 
 
 # ========================================================
-# gasp table edit
+# gasp table edits
 # ========================================================
 def test_update_gasp_table():
     tt = TTFont(FILEPATH_HINTED_TTF)
     assert update_gasp_table(tt) is True
     assert tt["gasp"].gaspRange == {65535: 15}
+
+
+# =========================================
+# maxp table edits
+# =========================================
+def test_update_maxp_table():
+    tt = TTFont(FILEPATH_HINTED_TTF)
+    assert update_maxp_table(tt) is True
+    assert tt["maxp"].maxZones == 0
+    assert tt["maxp"].maxTwilightPoints == 0
+    assert tt["maxp"].maxStorage == 0
+    assert tt["maxp"].maxFunctionDefs == 0
+    assert tt["maxp"].maxStackElements == 0
+    assert tt["maxp"].maxSizeOfInstructions == 0
