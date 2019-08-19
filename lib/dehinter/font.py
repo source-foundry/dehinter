@@ -28,6 +28,11 @@ def has_fpgm_table(tt):
     return "fpgm" in tt
 
 
+def has_gasp_table(tt):
+    """Tests for the presence of a gasp table in a TrueType font."""
+    return "gasp" in tt
+
+
 def has_hdmx_table(tt):
     """Tests for the presence of a hdmx table in a TrueType font."""
     return "hdmx" in tt
@@ -109,12 +114,9 @@ def update_gasp_table(tt):
     """Modifies the following gasp table fields:
           1) rangeMaxPPEM changed to 65535
           2) rangeGaspBehavior changed to bit mask 0b1111 = 15"""
-    if "gasp" in tt:
-        if tt["gasp"].gaspRange != {65535: 15}:
-            tt["gasp"].gaspRange = {65535: 15}
-            return True
-        else:
-            return False
+    if tt["gasp"].gaspRange != {65535: 15}:
+        tt["gasp"].gaspRange = {65535: 15}
+        return True
     else:
         return False
 

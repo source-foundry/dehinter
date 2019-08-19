@@ -21,7 +21,7 @@ from fontTools.ttLib import TTFont
 
 from dehinter import __version__
 from dehinter.font import is_truetype_font
-from dehinter.font import has_cvt_table, has_fpgm_table, has_hdmx_table, has_prep_table
+from dehinter.font import has_cvt_table, has_fpgm_table, has_gasp_table, has_hdmx_table, has_prep_table
 from dehinter.font import remove_cvt_table, remove_fpgm_table, remove_hdmx_table, remove_prep_table, remove_glyf_instructions
 from dehinter.font import update_gasp_table, update_maxp_table
 from dehinter.paths import filepath_exists
@@ -103,9 +103,9 @@ def main():
         print("[-] Removed glyf table instruction bytecode from {} glyphs".format(number_glyfs_edited))
 
     #  (3) Edit gasp table
-    # TODO: refactor to use a new has_gasp_table utility function
-    if update_gasp_table(tt):
-        print("[Δ] New gasp table values:{}    {}".format(os.linesep, pp.pformat(tt["gasp"].__dict__)))
+    if has_gasp_table(tt):
+        if update_gasp_table(tt):
+            print("[Δ] New gasp table values:{}    {}".format(os.linesep, pp.pformat(tt["gasp"].__dict__)))
 
     #  (4) Edit maxp table
     if update_maxp_table(tt):
