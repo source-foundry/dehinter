@@ -28,6 +28,11 @@ def has_fpgm_table(tt):
     return "fpgm" in tt
 
 
+def has_hdmx_table(tt):
+    """Tests for the presence of a hdmx table in a TrueType font."""
+    return "hdmx" in tt
+
+
 def has_prep_table(tt):
     """Tests for the presence of a prep table in a TrueType font."""
     return "prep" in tt
@@ -46,7 +51,7 @@ def is_truetype_font(filepath):
 # ========================================================
 # OpenType table removal
 # ========================================================
-# TODO: add removal functions for 1) hdmx table 2) LTSH table 3) TTFA table
+# TODO: add removal functions for LTSH table and TTFA table
 def remove_cvt_table(tt):
     """Removes cvt table from a fontTools.ttLib.TTFont object"""
     try:
@@ -60,6 +65,15 @@ def remove_fpgm_table(tt):
     """Removes fpgm table from a fontTools.ttLib.TTFont object"""
     try:
         del tt["fpgm"]
+    except KeyError:
+        # return unmodified font if table is not present in the font
+        pass
+
+
+def remove_hdmx_table(tt):
+    """Removes hdmx table from a fontTools.ttLib.TTFont object"""
+    try:
+        del tt["hdmx"]
     except KeyError:
         # return unmodified font if table is not present in the font
         pass

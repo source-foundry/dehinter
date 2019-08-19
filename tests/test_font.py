@@ -1,7 +1,7 @@
 import os
 
-from dehinter.font import is_truetype_font, has_cvt_table, has_fpgm_table, has_prep_table
-from dehinter.font import remove_cvt_table, remove_fpgm_table, remove_prep_table, remove_glyf_instructions
+from dehinter.font import is_truetype_font, has_cvt_table, has_fpgm_table, has_hdmx_table, has_prep_table
+from dehinter.font import remove_cvt_table, remove_fpgm_table, remove_hdmx_table, remove_prep_table, remove_glyf_instructions
 from dehinter.font import update_gasp_table, update_maxp_table
 
 import pytest
@@ -34,6 +34,16 @@ def test_has_fpgm_table_true():
 def test_has_fpgm_table_false():
     tt = TTFont(FILEPATH_DEHINTED_TTF)
     assert has_fpgm_table(tt) is False
+
+
+def test_has_hdmx_table_true():
+    tt = TTFont(FILEPATH_HINTED_TTF)
+    assert has_hdmx_table(tt) is True
+
+
+def test_has_hdmx_table_false():
+    tt = TTFont(FILEPATH_DEHINTED_TTF)
+    assert has_hdmx_table(tt) is False
 
 
 def test_has_prep_table_true():
@@ -83,6 +93,20 @@ def test_delete_fpgm_table_missing_table():
     assert ("fpgm" in tt) is False
     remove_fpgm_table(tt)
     assert ("fpgm" in tt) is False
+
+
+def test_delete_hdmx_table():
+    tt = TTFont(FILEPATH_HINTED_TTF)
+    assert ("hdmx" in tt) is True
+    remove_hdmx_table(tt)
+    assert ("hdmx" in tt) is False
+
+
+def test_delete_hdmtx_table_missing_table():
+    tt = TTFont(FILEPATH_DEHINTED_TTF)
+    assert ("hdmx" in tt) is False
+    remove_hdmx_table(tt)
+    assert ("hdmx" in tt) is False
 
 
 def test_delete_prep_table():
