@@ -46,6 +46,7 @@ def is_truetype_font(filepath):
 # ========================================================
 # OpenType table removal
 # ========================================================
+# TODO: add removal functions for 1) hdmx table 2) LTSH table 3) TTFA table
 def remove_cvt(tt):
     """Removes cvt table from a fontTools.ttLib.TTFont object"""
     try:
@@ -92,7 +93,7 @@ def remove_glyf_instructions(tt):
 def update_gasp_table(tt):
     """Modifies the following gasp table fields:
           1) rangeMaxPPEM changed to 65535
-          2) rangeGaspBehavior changed to bit mask to 0b1111 = 15"""
+          2) rangeGaspBehavior changed to bit mask 0b1111 = 15"""
     if "gasp" in tt:
         if tt["gasp"].gaspRange != {65535: 15}:
             tt["gasp"].gaspRange = {65535: 15}
