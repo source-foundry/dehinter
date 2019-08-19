@@ -14,6 +14,8 @@
 
 import array
 
+from dehinter.bitops import is_bit_k_set, clear_bit_k
+
 
 # ========================================================
 # Utilities
@@ -173,3 +175,15 @@ def update_maxp_table(tt):
         tt["maxp"].maxSizeOfInstructions = 0
         changed = True
     return changed
+
+
+# =========================================
+# head table edits
+# =========================================
+def update_head_table_flags(tt):
+    if is_bit_k_set(tt["head"].flags, 4):
+        new_flags = clear_bit_k(tt["head"].flags, 4)
+        tt["head"].flags = new_flags
+        return True
+    else:
+        return False

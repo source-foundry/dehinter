@@ -39,7 +39,7 @@ from dehinter.font import (
     remove_ttfa_table,
     remove_glyf_instructions,
 )
-from dehinter.font import update_gasp_table, update_maxp_table
+from dehinter.font import update_gasp_table, update_head_table_flags, update_maxp_table
 from dehinter.paths import filepath_exists
 
 
@@ -167,6 +167,10 @@ def main():
                 os.linesep, pp.pformat(tt["maxp"].__dict__)
             )
         )
+
+    #  (5) Edit head table flags to clear bit 4
+    if update_head_table_flags(tt):
+        print("[Δ] Cleared bit 4 in head table flags")
 
 
 if __name__ == "__main__":

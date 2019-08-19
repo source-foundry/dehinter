@@ -19,7 +19,7 @@ from dehinter.font import (
     remove_ttfa_table,
     remove_glyf_instructions,
 )
-from dehinter.font import update_gasp_table, update_maxp_table
+from dehinter.font import update_gasp_table, update_head_table_flags, update_maxp_table
 
 import pytest
 from fontTools.ttLib import TTFont
@@ -244,3 +244,22 @@ def test_update_maxp_table():
     assert tt["maxp"].maxFunctionDefs == 0
     assert tt["maxp"].maxStackElements == 0
     assert tt["maxp"].maxSizeOfInstructions == 0
+
+
+# =========================================
+# head table edits
+# =========================================
+def test_update_head_table_flags():
+    tt = TTFont(FILEPATH_HINTED_TTF)
+    assert (tt["head"].flags & (1 << 4)) != 0
+    response = update_head_table_flags(tt)
+    assert response is True
+    assert (tt["head"].flags & (1 << 4)) == 0
+
+
+def test_update_head_table_flags_previously_cleared():
+    tt = TTFont(FILEPATH_HINTED_TTF_2)
+    assert (tt["head"].flags & (1 << 4)) == 0
+    response = update_head_table_flags(tt)
+    assert response is False
+    assert (tt["head"].flags & (1 << 4)) == 0
