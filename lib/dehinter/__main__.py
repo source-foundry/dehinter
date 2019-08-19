@@ -28,6 +28,7 @@ from dehinter.font import (
     has_hdmx_table,
     has_ltsh_table,
     has_prep_table,
+    has_ttfa_table,
 )
 from dehinter.font import (
     remove_cvt_table,
@@ -35,6 +36,7 @@ from dehinter.font import (
     remove_hdmx_table,
     remove_ltsh_table,
     remove_prep_table,
+    remove_ttfa_table,
     remove_glyf_instructions,
 )
 from dehinter.font import update_gasp_table, update_maxp_table
@@ -87,7 +89,7 @@ def main():
 
     # Execution
     # ---------
-    #  (1) Unnecessary OpenType table removal
+    #  (1) OpenType table removal
     try:
         tt = TTFont(args.INFILE)
     except Exception as e:
@@ -132,6 +134,13 @@ def main():
             print("[-] Removed prep table")
         else:
             sys.stderr.write("[!] Error: failed to remove prep table from font")
+
+    if has_ttfa_table(tt):
+        remove_ttfa_table(tt)
+        if not has_ttfa_table(tt):
+            print("[-] Removed TTFA table")
+        else:
+            sys.stderr.write("[!] Error: failed to remove TTFA table from font")
 
     #  (2) Remove glyf table instruction set bytecode
     number_glyfs_edited = remove_glyf_instructions(tt)

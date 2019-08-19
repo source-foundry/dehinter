@@ -48,6 +48,11 @@ def has_prep_table(tt):
     return "prep" in tt
 
 
+def has_ttfa_table(tt):
+    """Tests for the presence of a TTFA table in a TrueType font."""
+    return "TTFA" in tt
+
+
 def is_truetype_font(filepath):
     """Tests that a font has the TrueType file signature of either:
          1) b'\x00\x01\x00\x00'
@@ -61,7 +66,6 @@ def is_truetype_font(filepath):
 # ========================================================
 # OpenType table removal
 # ========================================================
-# TODO: add removal functions for TTFA table
 def remove_cvt_table(tt):
     """Removes cvt table from a fontTools.ttLib.TTFont object"""
     try:
@@ -102,6 +106,15 @@ def remove_prep_table(tt):
     """Removes prep table from a fontTools.ttLib.TTFont object"""
     try:
         del tt["prep"]
+    except KeyError:
+        # do nothing if table is not present in the font
+        pass
+
+
+def remove_ttfa_table(tt):
+    """Removes TTFA table from a fontTools.ttLib.TTFont object"""
+    try:
+        del tt["TTFA"]
     except KeyError:
         # do nothing if table is not present in the font
         pass

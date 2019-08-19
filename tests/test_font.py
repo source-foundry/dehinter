@@ -1,7 +1,24 @@
 import os
 
-from dehinter.font import is_truetype_font, has_cvt_table, has_fpgm_table, has_hdmx_table, has_prep_table
-from dehinter.font import remove_cvt_table, remove_fpgm_table, remove_hdmx_table, remove_ltsh_table, remove_prep_table, remove_glyf_instructions
+from dehinter.font import (
+    is_truetype_font,
+    has_cvt_table,
+    has_fpgm_table,
+    has_gasp_table,
+    has_hdmx_table,
+    has_ltsh_table,
+    has_prep_table,
+    has_ttfa_table,
+)
+from dehinter.font import (
+    remove_cvt_table,
+    remove_fpgm_table,
+    remove_hdmx_table,
+    remove_ltsh_table,
+    remove_prep_table,
+    remove_ttfa_table,
+    remove_glyf_instructions,
+)
 from dehinter.font import update_gasp_table, update_maxp_table
 
 import pytest
@@ -9,12 +26,21 @@ from fontTools.ttLib import TTFont
 
 FILEPATH_TEST_TEXT = os.path.join("tests", "test_files", "text", "test.txt")
 FILEPATH_HINTED_TTF = os.path.join("tests", "test_files", "fonts", "Roboto-Regular.ttf")
-FILEPATH_DEHINTED_TTF = os.path.join("tests", "test_files", "fonts", "Roboto-Regular-dehinted.ttf")
+FILEPATH_DEHINTED_TTF = os.path.join(
+    "tests", "test_files", "fonts", "Roboto-Regular-dehinted.ttf"
+)
+FILEPATH_HINTED_TTF_2 = os.path.join(
+    "tests", "test_files", "fonts", "NotoSans-Regular.ttf"
+)
+FILEPATH_DEHINTED_TTF_2 = os.path.join(
+    "tests", "test_files", "fonts", "NotoSans-Regular-dehinted.ttf"
+)
 
 
 # ========================================================
 # Utilities
 # ========================================================
+
 
 def test_has_cvt_table_true():
     tt = TTFont(FILEPATH_HINTED_TTF)
@@ -36,6 +62,11 @@ def test_has_fpgm_table_false():
     assert has_fpgm_table(tt) is False
 
 
+def test_has_gasp_table_true():
+    tt = TTFont(FILEPATH_HINTED_TTF)
+    assert has_gasp_table(tt) is True
+
+
 def test_has_hdmx_table_true():
     tt = TTFont(FILEPATH_HINTED_TTF)
     assert has_hdmx_table(tt) is True
@@ -46,6 +77,16 @@ def test_has_hdmx_table_false():
     assert has_hdmx_table(tt) is False
 
 
+def test_has_ltsh_table_true():
+    tt = TTFont(FILEPATH_HINTED_TTF)
+    assert has_ltsh_table(tt) is True
+
+
+def test_has_ltsh_table_false():
+    tt = TTFont(FILEPATH_DEHINTED_TTF)
+    assert has_ltsh_table(tt) is False
+
+
 def test_has_prep_table_true():
     tt = TTFont(FILEPATH_HINTED_TTF)
     assert has_prep_table(tt) is True
@@ -54,6 +95,16 @@ def test_has_prep_table_true():
 def test_has_prep_table_false():
     tt = TTFont(FILEPATH_DEHINTED_TTF)
     assert has_prep_table(tt) is False
+
+
+def test_has_ttfa_table_true():
+    tt = TTFont(FILEPATH_HINTED_TTF_2)  # tested in Noto Sans font
+    assert has_ttfa_table(tt) is True
+
+
+def test_has_ttfa_table_false():
+    tt = TTFont(FILEPATH_DEHINTED_TTF_2)  # tested in Noto Sans font
+    assert has_ttfa_table(tt) is False
 
 
 def test_is_truetype_font_for_ttf():
@@ -137,6 +188,20 @@ def test_delete_prep_table_missing_table():
     assert ("prep" in tt) is False
 
 
+def test_delete_ttfa_table():
+    tt = TTFont(FILEPATH_HINTED_TTF_2)  # tested in Noto Sans
+    assert ("TTFA" in tt) is True
+    remove_ttfa_table(tt)
+    assert ("TTFA" in tt) is False
+
+
+def test_delete_ttfa_table_missing_table():
+    tt = TTFont(FILEPATH_DEHINTED_TTF_2)  # tested in Noto Sans
+    assert ("TTFA" in tt) is False
+    remove_ttfa_table(tt)
+    assert ("TTFA" in tt) is False
+
+
 # ========================================================
 # glyf table instruction set bytecode removal
 # ========================================================
@@ -161,11 +226,17 @@ def test_update_gasp_table():
     assert tt["gasp"].gaspRange == {65535: 15}
 
 
+def test_update_gasp_table_previous_correct_definition():
+    tt = TTFont(FILEPATH_HINTED_TTF_2)
+    assert update_gasp_table(tt) is False
+    assert tt["gasp"].gaspRange == {65535: 15}
+
+
 # =========================================
 # maxp table edits
 # =========================================
 def test_update_maxp_table():
-    tt = TTFont(FILEPATH_HINTED_TTF)
+    tt = TTFont(FILEPATH_HINTED_TTF_2)  # test in Noto Sans as all values are modified there
     assert update_maxp_table(tt) is True
     assert tt["maxp"].maxZones == 0
     assert tt["maxp"].maxTwilightPoints == 0
