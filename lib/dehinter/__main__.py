@@ -41,6 +41,7 @@ from dehinter.font import (
 )
 from dehinter.font import update_gasp_table, update_head_table_flags, update_maxp_table
 from dehinter.paths import filepath_exists, get_default_out_path
+from dehinter.system import get_filesize
 
 
 def main():
@@ -194,6 +195,14 @@ def main():
         print("{}[+] Saved dehinted font as '{}'".format(os.linesep, outpath))
     except Exception as e:
         sys.stderr.write("[!] Error: Unable to save dehinted font file: {}".format(str(e)))
+
+    # File size comparison
+    # --------------------
+    infile_size_tuple = get_filesize(args.INFILE)
+    outfile_size_tuple = get_filesize(outpath)  # depends on outpath definition defined during file write
+    print("{}[*] File sizes:".format(os.linesep))
+    print("    {}{} (hinted)".format(infile_size_tuple[0], infile_size_tuple[1]))
+    print("    {}{} (dehinted)".format(outfile_size_tuple[0], outfile_size_tuple[1]))
 
 
 if __name__ == "__main__":
