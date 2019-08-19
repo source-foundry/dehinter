@@ -38,6 +38,11 @@ def has_hdmx_table(tt):
     return "hdmx" in tt
 
 
+def has_ltsh_table(tt):
+    """Tests for the presence of a LTSH table in a TrueType font."""
+    return "LTSH" in tt
+
+
 def has_prep_table(tt):
     """Tests for the presence of a prep table in a TrueType font."""
     return "prep" in tt
@@ -56,13 +61,13 @@ def is_truetype_font(filepath):
 # ========================================================
 # OpenType table removal
 # ========================================================
-# TODO: add removal functions for LTSH table and TTFA table
+# TODO: add removal functions for TTFA table
 def remove_cvt_table(tt):
     """Removes cvt table from a fontTools.ttLib.TTFont object"""
     try:
         del tt["cvt "]
     except KeyError:
-        # return unmodified font if table is not present in the font
+        # do nothing if table is not present in the font
         pass
 
 
@@ -71,7 +76,7 @@ def remove_fpgm_table(tt):
     try:
         del tt["fpgm"]
     except KeyError:
-        # return unmodified font if table is not present in the font
+        # do nothing if table is not present in the font
         pass
 
 
@@ -80,7 +85,16 @@ def remove_hdmx_table(tt):
     try:
         del tt["hdmx"]
     except KeyError:
-        # return unmodified font if table is not present in the font
+        # do nothing if table is not present in the font
+        pass
+
+
+def remove_ltsh_table(tt):
+    """Removes LTSH table from a fontTools.ttLib.TTFont object."""
+    try:
+        del tt["LTSH"]
+    except KeyError:
+        # do nothing if table is not present in the font
         pass
 
 
@@ -89,7 +103,7 @@ def remove_prep_table(tt):
     try:
         del tt["prep"]
     except KeyError:
-        # return unmodified font if table is not present in the font
+        # do nothing if table is not present in the font
         pass
 
 

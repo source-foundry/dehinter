@@ -21,8 +21,8 @@ from fontTools.ttLib import TTFont
 
 from dehinter import __version__
 from dehinter.font import is_truetype_font
-from dehinter.font import has_cvt_table, has_fpgm_table, has_gasp_table, has_hdmx_table, has_prep_table
-from dehinter.font import remove_cvt_table, remove_fpgm_table, remove_hdmx_table, remove_prep_table, remove_glyf_instructions
+from dehinter.font import has_cvt_table, has_fpgm_table, has_gasp_table, has_hdmx_table, has_ltsh_table, has_prep_table
+from dehinter.font import remove_cvt_table, remove_fpgm_table, remove_hdmx_table, remove_ltsh_table, remove_prep_table, remove_glyf_instructions
 from dehinter.font import update_gasp_table, update_maxp_table
 from dehinter.paths import filepath_exists
 
@@ -89,6 +89,13 @@ def main():
             print("[-] Removed hdmx table")
         else:
             sys.stderr.write("[!] Error: failed to remove hdmx table from font")
+
+    if has_ltsh_table(tt):
+        remove_ltsh_table(tt)
+        if not has_ltsh_table(tt):
+            print("[-] Removed LTSH table")
+        else:
+            sys.stderr.write("[!] Error: failed to remove LTSH table from font")
 
     if has_prep_table(tt):
         remove_prep_table(tt)
