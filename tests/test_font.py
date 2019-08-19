@@ -2,13 +2,14 @@ import os
 
 from dehinter.font import is_truetype_font, has_cvt_table, has_fpgm_table, has_prep_table
 from dehinter.font import remove_cvt, remove_fpgm, remove_prep, remove_glyf_instructions
+from dehinter.font import update_gasp_table
 
 import pytest
 from fontTools.ttLib import TTFont
 
 FILEPATH_TEST_TEXT = os.path.join("tests", "test_files", "text", "test.txt")
-FILEPATH_HINTED_TTF = os.path.join("tests", "test_files", "fonts", "Hack-Regular.ttf")
-FILEPATH_DEHINTED_TTF = os.path.join("tests", "test_files", "fonts", "Hack-Regular-dehinted.ttf")
+FILEPATH_HINTED_TTF = os.path.join("tests", "test_files", "fonts", "Roboto-Regular.ttf")
+FILEPATH_DEHINTED_TTF = os.path.join("tests", "test_files", "fonts", "Roboto-Regular-dehinted.ttf")
 
 
 # ========================================================
@@ -104,7 +105,7 @@ def test_delete_prep_table_missing_table():
 def test_remove_glyf_instructions_hinted_font():
     tt = TTFont(FILEPATH_HINTED_TTF)
     number_removed = remove_glyf_instructions(tt)
-    assert number_removed == 1554
+    assert number_removed == 2717
 
 
 def test_remove_glyf_instructions_dehinted_font():
