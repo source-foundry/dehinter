@@ -113,3 +113,11 @@ def test_remove_glyf_instructions_dehinted_font():
     number_removed = remove_glyf_instructions(tt)
     assert number_removed == 0
 
+
+# ========================================================
+# gasp table edit
+# ========================================================
+def test_update_gasp_table():
+    tt = TTFont(FILEPATH_HINTED_TTF)
+    assert update_gasp_table(tt) is True
+    assert tt["gasp"].gaspRange == {65535: 15}

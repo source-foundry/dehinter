@@ -14,6 +14,7 @@
 
 import argparse
 import os
+import pprint
 import sys
 
 from fontTools.ttLib import TTFont
@@ -22,10 +23,13 @@ from dehinter import __version__
 from dehinter.font import is_truetype_font
 from dehinter.font import has_cvt_table, has_fpgm_table, has_prep_table
 from dehinter.font import remove_cvt, remove_fpgm, remove_prep, remove_glyf_instructions
+from dehinter.font import update_gasp_table
 from dehinter.paths import filepath_exists
 
 
 def main():
+    # instantiate pretty printer
+    pp = pprint.PrettyPrinter(indent=4)
 
     # ===========================================================
     # argparse command line argument definitions
@@ -90,6 +94,10 @@ def main():
     number_glyfs_edited = remove_glyf_instructions(tt)
     if number_glyfs_edited > 0:
         print("[-] Removed glyf table instruction bytecode from {} glyphs".format(number_glyfs_edited))
+
+    #  (3) Edit gasp table
+    if update_gasp_table(tt):
+        print("[Δ] New gasp table values:{}    {}".format(os.linesep, pp.pformat(tt["gasp"].__dict__)))
 
 
 if __name__ == "__main__":
