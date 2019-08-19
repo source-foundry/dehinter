@@ -40,7 +40,7 @@ from dehinter.font import (
     remove_glyf_instructions,
 )
 from dehinter.font import update_gasp_table, update_head_table_flags, update_maxp_table
-from dehinter.paths import filepath_exists
+from dehinter.paths import filepath_exists, get_default_out_path
 
 
 def main():
@@ -86,7 +86,15 @@ def main():
         )
         sys.stderr.write("[!] Request canceled.{}".format(os.linesep))
         sys.exit(1)
-
+    #   (3) confirm that out path is not the same as in path
+    #    This tool does not support writing dehinted files in place over hinted version
+    if args.INFILE == args.out:
+        sys.stderr.write(
+            "[!] Error: You are attempting to overwrite the hinted file with the dehinted file.  This is not supported. Please choose a different file path for the dehinted file.{}".format(
+                os.linesep
+            )
+        )
+        sys.exit(1)
     # Execution
     # ---------
     #  (1) OpenType table removal
@@ -171,6 +179,21 @@ def main():
     #  (5) Edit head table flags to clear bit 4
     if update_head_table_flags(tt):
         print("[Δ] Cleared bit 4 in head table flags")
+
+    # File write
+    # ----------
+    if args.out:
+        # validation performed above to prevent this file path definition from being the same
+        # as the in file path.  Write in place over a hinted file is not supported
+        outpath = args.out
+    else:
+        outpath = get_default_out_path(args.INFILE)
+
+    try:
+        tt.save(outpath)
+        print("{}[+] Saved dehinted font as '{}'".format(os.linesep, outpath))
+    except Exception as e:
+        sys.stderr.write("[!] Error: Unable to save dehinted font file: {}".format(str(e)))
 
 
 if __name__ == "__main__":

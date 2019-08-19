@@ -18,3 +18,12 @@ import os
 def filepath_exists(filepath):
     """Tests a file path string to confirm that the file exists on the file system"""
     return os.path.isfile(filepath)
+
+
+def get_default_out_path(filepath):
+    """Returns an updated file path that is used as dehinted file default when user
+    does not specify an out file path."""
+    dir_path, file_path = os.path.split(filepath)
+    file_name, file_extension = os.path.splitext(file_path)
+    default_file_name = file_name + "-dehinted" + file_extension
+    return os.path.join(dir_path, default_file_name)
