@@ -45,6 +45,10 @@ from dehinter.system import get_filesize
 
 
 def main():
+    run(sys.argv[1:])
+
+
+def run(argv):
     # instantiate pretty printer
     pp = pprint.PrettyPrinter(indent=4)
 
@@ -61,7 +65,7 @@ def main():
     parser.add_argument("-o", "--out", help="out file path (dehinted font)")
     parser.add_argument("INFILE", help="in file path (hinted font)")
 
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     # ===========================================================
     # Command line logic
@@ -206,4 +210,4 @@ def main():
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(run(sys.argv[1:]))
