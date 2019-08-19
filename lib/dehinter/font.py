@@ -47,7 +47,7 @@ def is_truetype_font(filepath):
 # OpenType table removal
 # ========================================================
 # TODO: add removal functions for 1) hdmx table 2) LTSH table 3) TTFA table
-def remove_cvt(tt):
+def remove_cvt_table(tt):
     """Removes cvt table from a fontTools.ttLib.TTFont object"""
     try:
         del tt["cvt "]
@@ -56,7 +56,7 @@ def remove_cvt(tt):
         pass
 
 
-def remove_fpgm(tt):
+def remove_fpgm_table(tt):
     """Removes fpgm table from a fontTools.ttLib.TTFont object"""
     try:
         del tt["fpgm"]
@@ -65,7 +65,7 @@ def remove_fpgm(tt):
         pass
 
 
-def remove_prep(tt):
+def remove_prep_table(tt):
     """Removes prep table from a fontTools.ttLib.TTFont object"""
     try:
         del tt["prep"]

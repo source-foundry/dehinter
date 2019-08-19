@@ -22,7 +22,7 @@ from fontTools.ttLib import TTFont
 from dehinter import __version__
 from dehinter.font import is_truetype_font
 from dehinter.font import has_cvt_table, has_fpgm_table, has_prep_table
-from dehinter.font import remove_cvt, remove_fpgm, remove_prep, remove_glyf_instructions
+from dehinter.font import remove_cvt_table, remove_fpgm_table, remove_prep_table, remove_glyf_instructions
 from dehinter.font import update_gasp_table, update_maxp_table
 from dehinter.paths import filepath_exists
 
@@ -34,7 +34,7 @@ def main():
     # ===========================================================
     # argparse command line argument definitions
     # ===========================================================
-    # TODO: add support for options to keep cvt, prep, and fpgm tables
+    # TODO: add support for options to keep individual tables that are removed by default
     parser = argparse.ArgumentParser(description="A tool for the removal of TrueType instruction sets (hints) in fonts")
     parser.add_argument("--version", action="version",
                         version="dehinter v{}".format(__version__))
@@ -70,21 +70,21 @@ def main():
         sys.exit(1)
 
     if has_cvt_table(tt):
-        remove_cvt(tt)
+        remove_cvt_table(tt)
         if not has_cvt_table(tt):
             print("[-] Removed cvt table")
         else:
             sys.stderr.write("[!] Error: failed to remove cvt table from font")
 
     if has_fpgm_table(tt):
-        remove_fpgm(tt)
+        remove_fpgm_table(tt)
         if not has_fpgm_table(tt):
             print("[-] Removed fpgm table")
         else:
             sys.stderr.write("[!] Error: failed to remove fpgm table from font")
 
     if has_prep_table(tt):
-        remove_prep(tt)
+        remove_prep_table(tt)
         if not has_prep_table(tt):
             print("[-] Removed prep table")
         else:
@@ -96,10 +96,11 @@ def main():
         print("[-] Removed glyf table instruction bytecode from {} glyphs".format(number_glyfs_edited))
 
     #  (3) Edit gasp table
+    # TODO: refactor to use a new has_gasp_table utility function
     if update_gasp_table(tt):
         print("[Δ] New gasp table values:{}    {}".format(os.linesep, pp.pformat(tt["gasp"].__dict__)))
 
-    #  (3) Edit maxp table
+    #  (4) Edit maxp table
     if update_maxp_table(tt):
         print("[Δ] New maxp table values:{}    {}".format(os.linesep, pp.pformat(tt["maxp"].__dict__)))
 
