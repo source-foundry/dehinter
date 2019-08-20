@@ -6,6 +6,8 @@ from fontTools.ttLib import TTFont
 
 from dehinter.__main__ import run
 
+import pytest
+
 
 #
 #  Integration tests
@@ -124,3 +126,37 @@ def test_run_with_outfile_path_noto():
     # tear down
     shutil.rmtree(test_dir)
 
+
+#
+# Validation error testing
+#
+
+def test_run_with_invalid_filepath():
+    with pytest.raises(SystemExit):
+        run(["bogusfile.txt"])
+
+
+def test_run_with_non_font_file():
+    with pytest.raises(SystemExit):
+        run([os.path.join("tests", "test_files", "text", "test.txt")])
+
+
+def test_run_dehinted_file_write_inplace():
+    test_dir = os.path.join("tests", "test_files", "fonts", "temp")
+    notouch_inpath = os.path.join("tests", "test_files", "fonts", "NotoSans-Regular.ttf")
+    test_inpath = os.path.join("tests", "test_files", "fonts", "temp", "NotoSans-Regular.ttf")
+    test_outpath = os.path.join("tests", "test_files", "fonts", "temp", "NotoSans-Regular.ttf")
+    test_args = [test_inpath, "-o", test_outpath]
+
+    # setup
+    if os.path.isdir(test_dir):
+        shutil.rmtree(test_dir)
+    os.mkdir(test_dir)
+    shutil.copyfile(notouch_inpath, test_inpath)
+
+    # execute
+    with pytest.raises(SystemExit):
+        run(test_args)
+
+    # tear down
+    shutil.rmtree(test_dir)
