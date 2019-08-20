@@ -17,7 +17,7 @@ INSTALL_REQUIRES = ["fontTools==3.44.0",
 # Optional packages
 EXTRAS_REQUIRES = {
     # for developer installs
-    "dev": ["wheel", "setuptools", "twine", "coverage", "pytest", "tox"]
+    "dev": ["wheel", "setuptools", "twine", "coverage", "pytest", "tox", "flake8", "pytype"]
 }
 
 this_file_path = os.path.abspath(os.path.dirname(__file__))
