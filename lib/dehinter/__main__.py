@@ -207,7 +207,3 @@ def run(argv):
     print("{}[*] File sizes:".format(os.linesep))
     print("    {}{} (hinted)".format(infile_size_tuple[0], infile_size_tuple[1]))
     print("    {}{} (dehinted)".format(outfile_size_tuple[0], outfile_size_tuple[1]))
-
-
-if __name__ == "__main__":
-    sys.exit(run(sys.argv[1:]))
