@@ -2,9 +2,11 @@ environment:
   matrix:
     - JOB: "3.6 32-bit"
       PYTHON_HOME: "C:\\Python36"
+      TOX_PY: py36
 
     - JOB: "3.7 64-bit"
       PYTHON_HOME: "C:\\Python37-x64"
+      TOX_PY: py37
 
 install:
   # Prepend Python to the PATH of this build
@@ -23,5 +25,4 @@ install:
 build: false
 
 test_script:
-  # run tests with the current 'python' in %PATH%
-  - "tox"
+  - "tox -e %TOX_PY%"
