@@ -13,6 +13,17 @@ matrix:
         - pip install --upgrade pytype
         - pip install -r requirements.txt
       script: make test-type-check
+    - python: 3.7
+      dist: xenial
+      env: TOX_ENV=coverage
+      install:
+        - pip install --upgrade coverage codecov
+        - pip install -r requirements.txt
+      script:
+        - coverage run --source dehinter -m py.test
+        - coverage report -m
+      after_success:
+        - bash <(curl -s https://codecov.io/bash)
     - python: 3.5
       env: TOX_ENV=py35
       install: pip install --upgrade tox pytest
