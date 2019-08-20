@@ -37,6 +37,11 @@ matrix:
       install: pip install --upgrade tox pytest
       dist: xenial
       script: tox -e $TOX_ENV
+    - os: osx
+      language: generic
+      install: pip install --upgrade tox pytest
+      env: TOX_ENV=py37
+      script: tox -e $TOX_ENV
 
 notifications:
   email: false
