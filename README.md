@@ -1,4 +1,5 @@
-# dehinter
+<img src="https://github.com/source-foundry/dehinter/raw/img/img/dehinter_logo-crunch.png" width="200" />
+<br/>
 
 [![Build Status](https://travis-ci.org/source-foundry/dehinter.svg?branch=master)](https://travis-ci.org/source-foundry/dehinter)
 [![Build status](https://ci.appveyor.com/api/projects/status/08uftyy98ni837ak?svg=true)](https://ci.appveyor.com/project/chrissimpkins/dehinter)
