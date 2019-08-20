@@ -55,7 +55,6 @@ def run(argv):
     # ===========================================================
     # argparse command line argument definitions
     # ===========================================================
-    # TODO: add support for options to keep individual tables that are removed by default
     parser = argparse.ArgumentParser(
         description="A tool for the removal of TrueType instruction sets (hints) in fonts"
     )
@@ -63,6 +62,24 @@ def run(argv):
         "--version", action="version", version="dehinter v{}".format(__version__)
     )
     parser.add_argument("-o", "--out", help="out file path (dehinted font)")
+    parser.add_argument("--keep-cvt", help="keep cvt table", action="store_true")
+    parser.add_argument("--keep-fpgm", help="keep fpgm table", action="store_true")
+    parser.add_argument("--keep-hdmx", help="keep hdmx table", action="store_true")
+    parser.add_argument("--keep-ltsh", help="keep LTSH table", action="store_true")
+    parser.add_argument("--keep-prep", help="keep prep table", action="store_true")
+    parser.add_argument("--keep-ttfa", help="keep TTFA table", action="store_true")
+    parser.add_argument(
+        "--keep-glyf", help="do not modify glyf table", action="store_true"
+    )
+    parser.add_argument(
+        "--keep-gasp", help="do not modify gasp table", action="store_true"
+    )
+    parser.add_argument(
+        "--keep-maxp", help="do not modify maxp table", action="store_true"
+    )
+    parser.add_argument(
+        "--keep-head", help="do not modify head table", action="store_true"
+    )
     parser.add_argument("INFILE", help="in file path (hinted font)")
 
     args = parser.parse_args(argv)
@@ -113,77 +130,87 @@ def run(argv):
         )
         sys.exit(1)
 
-    if has_cvt_table(tt):
-        remove_cvt_table(tt)
-        if not has_cvt_table(tt):
-            print("[-] Removed cvt table")
-        else:
-            sys.stderr.write("[!] Error: failed to remove cvt table from font")
+    if not args.keep_cvt:
+        if has_cvt_table(tt):
+            remove_cvt_table(tt)
+            if not has_cvt_table(tt):
+                print("[-] Removed cvt table")
+            else:
+                sys.stderr.write("[!] Error: failed to remove cvt table from font")
 
-    if has_fpgm_table(tt):
-        remove_fpgm_table(tt)
-        if not has_fpgm_table(tt):
-            print("[-] Removed fpgm table")
-        else:
-            sys.stderr.write("[!] Error: failed to remove fpgm table from font")
+    if not args.keep_fpgm:
+        if has_fpgm_table(tt):
+            remove_fpgm_table(tt)
+            if not has_fpgm_table(tt):
+                print("[-] Removed fpgm table")
+            else:
+                sys.stderr.write("[!] Error: failed to remove fpgm table from font")
 
-    if has_hdmx_table(tt):
-        remove_hdmx_table(tt)
-        if not has_hdmx_table(tt):
-            print("[-] Removed hdmx table")
-        else:
-            sys.stderr.write("[!] Error: failed to remove hdmx table from font")
+    if not args.keep_hdmx:
+        if has_hdmx_table(tt):
+            remove_hdmx_table(tt)
+            if not has_hdmx_table(tt):
+                print("[-] Removed hdmx table")
+            else:
+                sys.stderr.write("[!] Error: failed to remove hdmx table from font")
 
-    if has_ltsh_table(tt):
-        remove_ltsh_table(tt)
-        if not has_ltsh_table(tt):
-            print("[-] Removed LTSH table")
-        else:
-            sys.stderr.write("[!] Error: failed to remove LTSH table from font")
+    if not args.keep_ltsh:
+        if has_ltsh_table(tt):
+            remove_ltsh_table(tt)
+            if not has_ltsh_table(tt):
+                print("[-] Removed LTSH table")
+            else:
+                sys.stderr.write("[!] Error: failed to remove LTSH table from font")
 
-    if has_prep_table(tt):
-        remove_prep_table(tt)
-        if not has_prep_table(tt):
-            print("[-] Removed prep table")
-        else:
-            sys.stderr.write("[!] Error: failed to remove prep table from font")
+    if not args.keep_prep:
+        if has_prep_table(tt):
+            remove_prep_table(tt)
+            if not has_prep_table(tt):
+                print("[-] Removed prep table")
+            else:
+                sys.stderr.write("[!] Error: failed to remove prep table from font")
 
-    if has_ttfa_table(tt):
-        remove_ttfa_table(tt)
-        if not has_ttfa_table(tt):
-            print("[-] Removed TTFA table")
-        else:
-            sys.stderr.write("[!] Error: failed to remove TTFA table from font")
+    if not args.keep_ttfa:
+        if has_ttfa_table(tt):
+            remove_ttfa_table(tt)
+            if not has_ttfa_table(tt):
+                print("[-] Removed TTFA table")
+            else:
+                sys.stderr.write("[!] Error: failed to remove TTFA table from font")
 
     #  (2) Remove glyf table instruction set bytecode
-    number_glyfs_edited = remove_glyf_instructions(tt)
-    if number_glyfs_edited > 0:
-        print(
-            "[-] Removed glyf table instruction bytecode from {} glyphs".format(
-                number_glyfs_edited
-            )
-        )
-
-    #  (3) Edit gasp table
-    if has_gasp_table(tt):
-        if update_gasp_table(tt):
+    if not args.keep_glyf:
+        number_glyfs_edited = remove_glyf_instructions(tt)
+        if number_glyfs_edited > 0:
             print(
-                "[Δ] New gasp table values:{}    {}".format(
-                    os.linesep, pp.pformat(tt["gasp"].__dict__)
+                "[-] Removed glyf table instruction bytecode from {} glyphs".format(
+                    number_glyfs_edited
                 )
             )
 
+    #  (3) Edit gasp table
+    if not args.keep_gasp:
+        if has_gasp_table(tt):
+            if update_gasp_table(tt):
+                print(
+                    "[Δ] New gasp table values:{}    {}".format(
+                        os.linesep, pp.pformat(tt["gasp"].__dict__)
+                    )
+                )
+
     #  (4) Edit maxp table
-    if update_maxp_table(tt):
-        print(
-            "[Δ] New maxp table values:{}    {}".format(
-                os.linesep, pp.pformat(tt["maxp"].__dict__)
+    if not args.keep_maxp:
+        if update_maxp_table(tt):
+            print(
+                "[Δ] New maxp table values:{}    {}".format(
+                    os.linesep, pp.pformat(tt["maxp"].__dict__)
+                )
             )
-        )
 
     #  (5) Edit head table flags to clear bit 4
-    if update_head_table_flags(tt):
-        print("[Δ] Cleared bit 4 in head table flags")
+    if not args.keep_head:
+        if update_head_table_flags(tt):
+            print("[Δ] Cleared bit 4 in head table flags")
 
     # File write
     # ----------
