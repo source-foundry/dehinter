@@ -198,12 +198,16 @@ def run(argv):
         tt.save(outpath)
         print("{}[+] Saved dehinted font as '{}'".format(os.linesep, outpath))
     except Exception as e:
-        sys.stderr.write("[!] Error: Unable to save dehinted font file: {}".format(str(e)))
+        sys.stderr.write(
+            "[!] Error: Unable to save dehinted font file: {}".format(str(e))
+        )
 
     # File size comparison
     # --------------------
     infile_size_tuple = get_filesize(args.INFILE)
-    outfile_size_tuple = get_filesize(outpath)  # depends on outpath definition defined during file write
+    outfile_size_tuple = get_filesize(
+        outpath
+    )  # depends on outpath definition defined during file write
     print("{}[*] File sizes:".format(os.linesep))
     print("    {}{} (hinted)".format(infile_size_tuple[0], infile_size_tuple[1]))
     print("    {}{} (dehinted)".format(outfile_size_tuple[0], outfile_size_tuple[1]))
