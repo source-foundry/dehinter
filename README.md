@@ -1,7 +1,8 @@
 # dehinter
 
 [![Build Status](https://travis-ci.org/source-foundry/dehinter.svg?branch=master)](https://travis-ci.org/source-foundry/dehinter)
-
+[![codecov](https://codecov.io/gh/source-foundry/dehinter/branch/master/graph/badge.svg)](https://codecov.io/gh/source-foundry/dehinter)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a2f54fac2c544f389e0066cfa159dfe8)](https://www.codacy.com/app/SourceFoundry/dehinter?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=source-foundry/dehinter&amp;utm_campaign=Badge_Grade)
 
 ## License
 
