@@ -14,7 +14,7 @@
 
 
 def is_bit_k_set(int_val, k):
-    """Tests if the value of bit at offset k in an integer is set to 1"""
+    """Tests if the value of bit at offset k in an integer is set"""
     return (int_val & (1 << k)) != 0
 
 
@@ -24,5 +24,5 @@ def clear_bit_k(int_val, k):
 
 
 def set_bit_k(int_val, k):
-    """Sets the value of bit at offset k to 1"""
+    """Sets the bit at offset k"""
     return int_val | (1 << k)
