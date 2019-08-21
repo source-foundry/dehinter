@@ -25,6 +25,8 @@
 - Updates [head table](https://docs.microsoft.com/en-us/typography/opentype/spec/head) bit flags
 - Displays file sizes of the hinted and dehinted versions of the fonts
 
+Options allow you to maintain the original version of any of these tables.
+
 ## Installation
 
 Installation in a [Python3 virtual environment](https://docs.python.org/3/library/venv.html) is recommended as dependencies are pinned to versions that are confirmed to work with this project.
