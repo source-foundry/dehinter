@@ -46,7 +46,7 @@ from dehinter.paths import filepath_exists, get_default_out_path
 from dehinter.system import get_filesize
 
 
-def main():
+def main():  # pragma: no cover
     run(sys.argv[1:])
 
 
@@ -138,7 +138,7 @@ def run(argv):
             remove_cvt_table(tt)
             if not has_cvt_table(tt):
                 print("[-] Removed cvt table")
-            else:
+            else:  # pragma: no cover
                 sys.stderr.write("[!] Error: failed to remove cvt table from font")
 
     if not args.keep_fpgm:
@@ -146,7 +146,7 @@ def run(argv):
             remove_fpgm_table(tt)
             if not has_fpgm_table(tt):
                 print("[-] Removed fpgm table")
-            else:
+            else:  # pragma: no cover
                 sys.stderr.write("[!] Error: failed to remove fpgm table from font")
 
     if not args.keep_hdmx:
@@ -154,7 +154,7 @@ def run(argv):
             remove_hdmx_table(tt)
             if not has_hdmx_table(tt):
                 print("[-] Removed hdmx table")
-            else:
+            else:  # pragma: no cover
                 sys.stderr.write("[!] Error: failed to remove hdmx table from font")
 
     if not args.keep_ltsh:
@@ -162,7 +162,7 @@ def run(argv):
             remove_ltsh_table(tt)
             if not has_ltsh_table(tt):
                 print("[-] Removed LTSH table")
-            else:
+            else:  # pragma: no cover
                 sys.stderr.write("[!] Error: failed to remove LTSH table from font")
 
     if not args.keep_prep:
@@ -170,7 +170,7 @@ def run(argv):
             remove_prep_table(tt)
             if not has_prep_table(tt):
                 print("[-] Removed prep table")
-            else:
+            else:  # pragma: no cover
                 sys.stderr.write("[!] Error: failed to remove prep table from font")
 
     if not args.keep_ttfa:
@@ -178,7 +178,7 @@ def run(argv):
             remove_ttfa_table(tt)
             if not has_ttfa_table(tt):
                 print("[-] Removed TTFA table")
-            else:
+            else:  # pragma: no cover
                 sys.stderr.write("[!] Error: failed to remove TTFA table from font")
 
     if not args.keep_vdmx:
@@ -186,7 +186,7 @@ def run(argv):
             remove_vdmx_table(tt)
             if not has_vdmx_table(tt):
                 print("[-] Removed VDMX table")
-            else:
+            else:  # pragma: no cover
                 sys.stderr.write("[!] Error: failed to remove VDMX table from font")
 
     #  (2) Remove glyf table instruction set bytecode
@@ -235,7 +235,7 @@ def run(argv):
     try:
         tt.save(outpath)
         print("{}[+] Saved dehinted font as '{}'".format(os.linesep, outpath))
-    except Exception as e:
+    except Exception as e:  # pragma: no cover
         sys.stderr.write(
             "[!] Error: Unable to save dehinted font file: {}".format(str(e))
         )
