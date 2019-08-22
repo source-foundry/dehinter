@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.4.0
+
+- changed min Python version to Python 3.6+ interpreters
+- added support for default VDMX table removal
+- added `--keep-vdmx` option to keep original VDMX table
+- updated fontTools dependency to v4.0.0
+- changed configuration to build wheels for Py3 only
+- setup.py file updated with new classifiers
+- added new Ubuntu-Regular.ttf testing file with the UFL license
+- added the Roboto testing file license
+
 ## v0.3.0
 
 - modified `glyf` table instruction set bytecode removal approach for composite glyphs
