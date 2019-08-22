@@ -186,8 +186,13 @@ def update_maxp_table(tt):
 # =========================================
 def update_head_table_flags(tt):
     if is_bit_k_set(tt["head"].flags, 4):
-        new_flags = clear_bit_k(tt["head"].flags, 4)
-        tt["head"].flags = new_flags
-        return True
+        # confirm that there is no LTSH or hdmx table
+        # bit 4 should be set if either of these tables are present in font
+        if has_hdmx_table(tt) or has_ltsh_table(tt):
+            return False
+        else:
+            new_flags = clear_bit_k(tt["head"].flags, 4)
+            tt["head"].flags = new_flags
+            return True
     else:
         return False

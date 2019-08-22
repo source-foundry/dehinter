@@ -249,12 +249,40 @@ def test_update_maxp_table():
 # =========================================
 # head table edits
 # =========================================
-def test_update_head_table_flags():
+def test_update_head_table_flags_without_ltsh_hdmx():
     tt = TTFont(FILEPATH_HINTED_TTF)
     assert (tt["head"].flags & (1 << 4)) != 0
+    remove_hdmx_table(tt)
+    remove_ltsh_table(tt)
     response = update_head_table_flags(tt)
     assert response is True
     assert (tt["head"].flags & (1 << 4)) == 0
+
+
+def test_update_head_table_flags_with_ltsh_hdmx():
+    tt = TTFont(FILEPATH_HINTED_TTF)
+    assert (tt["head"].flags & (1 << 4)) != 0
+    response = update_head_table_flags(tt)
+    assert response is False
+    assert (tt["head"].flags & (1 << 4)) != 0
+
+
+def test_update_head_table_flags_with_ltsh():
+    tt = TTFont(FILEPATH_HINTED_TTF)
+    assert (tt["head"].flags & (1 << 4)) != 0
+    remove_hdmx_table(tt)
+    response = update_head_table_flags(tt)
+    assert response is False
+    assert (tt["head"].flags & (1 << 4)) != 0
+
+
+def test_update_head_table_flags_with_hdmx():
+    tt = TTFont(FILEPATH_HINTED_TTF)
+    assert (tt["head"].flags & (1 << 4)) != 0
+    remove_ltsh_table(tt)
+    response = update_head_table_flags(tt)
+    assert response is False
+    assert (tt["head"].flags & (1 << 4)) != 0
 
 
 def test_update_head_table_flags_previously_cleared():
