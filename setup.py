@@ -10,14 +10,16 @@ LICENSE = "Apache License v2.0"
 URL = "https://github.com/source-foundry/dehinter"
 EMAIL = "chris@sourcefoundry.org"
 AUTHOR = "Source Foundry Authors and Contributors"
-REQUIRES_PYTHON = ">=3.5.0"
+REQUIRES_PYTHON = ">=3.6.0"
 
-INSTALL_REQUIRES = ["fontTools==3.44.0",
+INSTALL_REQUIRES = ["fontTools==4.0.0",
                     ]
 # Optional packages
 EXTRAS_REQUIRES = {
     # for developer installs
-    "dev": ["wheel", "setuptools", "twine", "coverage", "pytest", "tox", "flake8", "pytype"]
+    "dev": ["coverage", "pytest", "tox", "flake8", "pytype"],
+    # for maintainer installs
+    "maintain": ["wheel", "setuptools", "twine"]
 }
 
 this_file_path = os.path.abspath(os.path.dirname(__file__))
