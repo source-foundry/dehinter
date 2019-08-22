@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.3.0
+
+- modified `glyf` table instruction set bytecode removal approach for composite glyphs
+- fixed: `head` table flags bit 4 is now cleared only when `hdmx` and `LTSH` tables are removed (or were not present and bit is set in the font)
+
 ## v0.2.0
 
 - add `--keep-cvt` option to keep original cvt table
