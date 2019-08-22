@@ -55,6 +55,11 @@ def has_ttfa_table(tt):
     return "TTFA" in tt
 
 
+def has_vdmx_table(tt):
+    """Tests for the presence of a VDMX table in a TrueType font."""
+    return "VDMX" in tt
+
+
 def is_truetype_font(filepath):
     """Tests that a font has the TrueType file signature of either:
          1) b'\x00\x01\x00\x00'
@@ -117,6 +122,15 @@ def remove_ttfa_table(tt):
     """Removes TTFA table from a fontTools.ttLib.TTFont object"""
     try:
         del tt["TTFA"]
+    except KeyError:
+        # do nothing if table is not present in the font
+        pass
+
+
+def remove_vdmx_table(tt):
+    """Removes TTFA table from a fontTools.ttLib.TTFont object"""
+    try:
+        del tt["VDMX"]
     except KeyError:
         # do nothing if table is not present in the font
         pass

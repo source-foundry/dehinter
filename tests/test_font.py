@@ -9,6 +9,7 @@ from dehinter.font import (
     has_ltsh_table,
     has_prep_table,
     has_ttfa_table,
+    has_vdmx_table,
 )
 from dehinter.font import (
     remove_cvt_table,
@@ -17,6 +18,7 @@ from dehinter.font import (
     remove_ltsh_table,
     remove_prep_table,
     remove_ttfa_table,
+    remove_vdmx_table,
     remove_glyf_instructions,
 )
 from dehinter.font import update_gasp_table, update_head_table_flags, update_maxp_table
@@ -35,6 +37,8 @@ FILEPATH_HINTED_TTF_2 = os.path.join(
 FILEPATH_DEHINTED_TTF_2 = os.path.join(
     "tests", "test_files", "fonts", "NotoSans-Regular-dehinted.ttf"
 )
+
+FILEPATH_HINTED_TTF_3 = os.path.join("tests", "test_files", "fonts", "Ubuntu-Regular.ttf")
 
 
 # ========================================================
@@ -105,6 +109,16 @@ def test_has_ttfa_table_true():
 def test_has_ttfa_table_false():
     tt = TTFont(FILEPATH_DEHINTED_TTF_2)  # tested in Noto Sans font
     assert has_ttfa_table(tt) is False
+
+
+def test_has_vdmx_table_true():
+    tt = TTFont(FILEPATH_HINTED_TTF_3)
+    assert has_vdmx_table(tt) is True
+
+
+def test_has_vdmx_table_false():
+    tt = TTFont(FILEPATH_HINTED_TTF)
+    assert has_vdmx_table(tt) is False
 
 
 def test_is_truetype_font_for_ttf():
@@ -200,6 +214,20 @@ def test_delete_ttfa_table_missing_table():
     assert ("TTFA" in tt) is False
     remove_ttfa_table(tt)
     assert ("TTFA" in tt) is False
+
+
+def test_delete_vdmx_table():
+    tt = TTFont(FILEPATH_HINTED_TTF_3)  # tested in Ubuntu
+    assert ("VDMX" in tt) is True
+    remove_vdmx_table(tt)
+    assert ("VDMX" in tt) is False
+
+
+def test_delete_vdmx_table_missing_table():
+    tt = TTFont(FILEPATH_DEHINTED_TTF)  # tested in Roboto
+    assert ("VDMX" in tt) is False
+    remove_vdmx_table(tt)
+    assert ("VDMX" in tt) is False
 
 
 # ========================================================
