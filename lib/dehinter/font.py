@@ -131,8 +131,12 @@ def remove_glyf_instructions(tt):
     for glyph in tt["glyf"].glyphs.values():
         glyph.expand(tt["glyf"])
         if hasattr(glyph, "program") and glyph.program.bytecode != array.array("B", []):
-            glyph.program.bytecode = array.array("B", [])
-            glyph_number += 1
+            if glyph.isComposite():
+                del glyph.program
+                glyph_number += 1
+            else:
+                glyph.program.bytecode = array.array("B", [])
+                glyph_number += 1
     return glyph_number
 
 

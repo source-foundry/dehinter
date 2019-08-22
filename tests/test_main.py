@@ -24,6 +24,8 @@ def font_validator(filepath):
     assert "TTFA" not in tt
     for glyph in tt["glyf"].glyphs.values():
         glyph.expand(tt["glyf"])
+        if glyph.isComposite():
+            assert not hasattr(glyph, "program")
         if hasattr(glyph, "program"):
             assert glyph.program.bytecode == array.array("B", [])
     assert tt["gasp"].gaspRange == {65535: 15}
