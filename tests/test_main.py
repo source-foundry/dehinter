@@ -22,6 +22,7 @@ def font_validator(filepath):
     assert "LTSH" not in tt
     assert "prep" not in tt
     assert "TTFA" not in tt
+    assert "VDMX" not in tt
     for glyph in tt["glyf"].glyphs.values():
         glyph.expand(tt["glyf"])
         if glyph.isComposite():
@@ -65,6 +66,30 @@ def test_default_run_noto():
     notouch_inpath = os.path.join("tests", "test_files", "fonts", "NotoSans-Regular.ttf")
     test_inpath = os.path.join("tests", "test_files", "fonts", "temp", "NotoSans-Regular.ttf")
     test_outpath = os.path.join("tests", "test_files", "fonts", "temp", "NotoSans-Regular-dehinted.ttf")
+    test_args = [test_inpath]
+
+    # setup
+    if os.path.isdir(test_dir):
+        shutil.rmtree(test_dir)
+    os.mkdir(test_dir)
+    shutil.copyfile(notouch_inpath, test_inpath)
+
+    # execute
+    run(test_args)
+
+    # test
+    font_validator(test_outpath)
+
+    # tear down
+    shutil.rmtree(test_dir)
+
+
+def test_default_run_ubuntu():
+    """This is used to test VDMX table removal"""
+    test_dir = os.path.join("tests", "test_files", "fonts", "temp")
+    notouch_inpath = os.path.join("tests", "test_files", "fonts", "Ubuntu-Regular.ttf")
+    test_inpath = os.path.join("tests", "test_files", "fonts", "temp", "Ubuntu-Regular.ttf")
+    test_outpath = os.path.join("tests", "test_files", "fonts", "temp", "Ubuntu-Regular-dehinted.ttf")
     test_args = [test_inpath]
 
     # setup
@@ -222,6 +247,31 @@ def test_run_noto_keep_ttfa():  # this has to be tested in Noto as it contains a
     # test
     tt = TTFont(test_outpath)
     assert "TTFA" in tt
+
+    # tear down
+    shutil.rmtree(test_dir)
+
+
+def test_default_run_ubuntu_keep_vdmx():
+    """This is used to test VDMX table removal"""
+    test_dir = os.path.join("tests", "test_files", "fonts", "temp")
+    notouch_inpath = os.path.join("tests", "test_files", "fonts", "Ubuntu-Regular.ttf")
+    test_inpath = os.path.join("tests", "test_files", "fonts", "temp", "Ubuntu-Regular.ttf")
+    test_outpath = os.path.join("tests", "test_files", "fonts", "temp", "Ubuntu-Regular-dehinted.ttf")
+    test_args = [test_inpath, "--keep-vdmx"]
+
+    # setup
+    if os.path.isdir(test_dir):
+        shutil.rmtree(test_dir)
+    os.mkdir(test_dir)
+    shutil.copyfile(notouch_inpath, test_inpath)
+
+    # execute
+    run(test_args)
+
+    # test
+    tt = TTFont(test_outpath)
+    assert "VDMX" in tt
 
     # tear down
     shutil.rmtree(test_dir)

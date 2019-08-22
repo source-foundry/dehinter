@@ -29,6 +29,7 @@ from dehinter.font import (
     has_ltsh_table,
     has_prep_table,
     has_ttfa_table,
+    has_vdmx_table,
 )
 from dehinter.font import (
     remove_cvt_table,
@@ -37,6 +38,7 @@ from dehinter.font import (
     remove_ltsh_table,
     remove_prep_table,
     remove_ttfa_table,
+    remove_vdmx_table,
     remove_glyf_instructions,
 )
 from dehinter.font import update_gasp_table, update_head_table_flags, update_maxp_table
@@ -68,6 +70,7 @@ def run(argv):
     parser.add_argument("--keep-ltsh", help="keep LTSH table", action="store_true")
     parser.add_argument("--keep-prep", help="keep prep table", action="store_true")
     parser.add_argument("--keep-ttfa", help="keep TTFA table", action="store_true")
+    parser.add_argument("--keep-vdmx", help="keep VDMX table", action="store_true")
     parser.add_argument(
         "--keep-glyf", help="do not modify glyf table", action="store_true"
     )
@@ -177,6 +180,14 @@ def run(argv):
                 print("[-] Removed TTFA table")
             else:
                 sys.stderr.write("[!] Error: failed to remove TTFA table from font")
+
+    if not args.keep_vdmx:
+        if has_vdmx_table(tt):
+            remove_vdmx_table(tt)
+            if not has_vdmx_table(tt):
+                print("[-] Removed VDMX table")
+            else:
+                sys.stderr.write("[!] Error: failed to remove VDMX table from font")
 
     #  (2) Remove glyf table instruction set bytecode
     if not args.keep_glyf:
