@@ -69,6 +69,7 @@ setup(
     python_requires=REQUIRES_PYTHON,
     entry_points={"console_scripts": ["dehinter = dehinter.__main__:main"]},
     classifiers=[
+        "Development Status :: 4 - Beta",
         "Environment :: Console",
         "Environment :: Other Environment",
         "Intended Audience :: Developers",
@@ -78,6 +79,8 @@ setup(
         "Operating System :: OS Independent",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
         "Topic :: Text Processing :: Fonts",
         "Topic :: Multimedia :: Graphics",
         "Topic :: Multimedia :: Graphics :: Graphics Conversion",
