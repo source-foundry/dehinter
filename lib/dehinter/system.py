@@ -18,17 +18,17 @@ import os
 def get_filesize(filepath):
     """Returns formatted file size tuple fit for printing to end user."""
     filesize = os.path.getsize(filepath)
-    KB_FACTOR = 1 << 10
-    MB_FACTOR = 1 << 20
+    kb_factor = 1 << 10
+    mb_factor = 1 << 20
 
-    if filesize < KB_FACTOR:
+    if filesize < kb_factor:
         size_string = "B"
         formatted_filesize = float(filesize)
-    elif KB_FACTOR <= filesize < MB_FACTOR:
+    elif kb_factor <= filesize < mb_factor:
         size_string = "KB"
-        formatted_filesize = filesize / float(KB_FACTOR)
+        formatted_filesize = filesize / float(kb_factor)
     else:
         size_string = "MB"
-        formatted_filesize = filesize / float(MB_FACTOR)
+        formatted_filesize = filesize / float(mb_factor)
 
     return "{0:.2f}".format(formatted_filesize), size_string
