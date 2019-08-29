@@ -38,6 +38,6 @@ test-unit:
 	tox
 
 uninstall:
-	pip3 uninstall --yes fontelemetry
+	pip3 uninstall --yes dehinter
 
 .PHONY: all black clean dist-build dist-push install install-dev install-user test test-lint test-type-check test-unit uninstall
