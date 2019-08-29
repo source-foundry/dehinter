@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.4.1
+
+- fix Makefile uninstall target error
+- PEP8 source formatting edits
+
 ## v0.4.0
 
 - changed min Python version to Python 3.6+ interpreters
