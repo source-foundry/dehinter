@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.4.2
+
+- fix Travis CI testing error on macOS platform with move to `pip3` from `pip`
+- update fontTools dependency to v4.0.1
+
 ## v0.4.1
 
 - fix Makefile uninstall target error
