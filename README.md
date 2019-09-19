@@ -1,6 +1,7 @@
 <img src="https://github.com/source-foundry/dehinter/raw/img/img/dehinter_logo-crunch.png" width="300" />
 <br/>
 
+[![PyPI](https://img.shields.io/pypi/v/dehinter?color=blueviolet&label=PyPI&logo=python&logoColor=white)](https://pypi.org/project/dehinter/)
 [![Build Status](https://travis-ci.org/source-foundry/dehinter.svg?branch=master)](https://travis-ci.org/source-foundry/dehinter)
 [![Build status](https://ci.appveyor.com/api/projects/status/08uftyy98ni837ak?svg=true)](https://ci.appveyor.com/project/chrissimpkins/dehinter)
 [![codecov](https://codecov.io/gh/source-foundry/dehinter/branch/master/graph/badge.svg)](https://codecov.io/gh/source-foundry/dehinter)
