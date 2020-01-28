@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.4.3
+
+- escalated fontTools dependency version to v4.2.4
+
 ## v0.4.2
 
 - fix Travis CI testing error on macOS platform with move to `pip3` from `pip`
