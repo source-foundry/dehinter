@@ -14,7 +14,7 @@ environment:
 
     - JOB: "3.8 64-bit"
       PYTHON_HOME: "C:\\Python38-x64"
-      TOX_PY: py37
+      TOX_PY: py38
 
 install:
   # Prepend Python to the PATH of this build
