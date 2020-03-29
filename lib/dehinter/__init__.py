@@ -12,4 +12,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-version = __version__ = "0.4.3"
+version = __version__ = "1.0.0"
