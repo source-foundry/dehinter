@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.0.0
+
+- updated fontTools and associated dependencies to v4.6.0 release
+- this update adds Unicode 13 support
+- add Python3.8 CI testing support
+
 ## v0.4.3
 
 - escalated fontTools dependency version to v4.2.4
