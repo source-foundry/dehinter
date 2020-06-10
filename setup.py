@@ -12,7 +12,7 @@ EMAIL = "chris@sourcefoundry.org"
 AUTHOR = "Source Foundry Authors and Contributors"
 REQUIRES_PYTHON = ">=3.6.0"
 
-INSTALL_REQUIRES = ["fontTools==4.11.0",
+INSTALL_REQUIRES = ["fontTools==4.12.0",
                     ]
 # Optional packages
 EXTRAS_REQUIRES = {
