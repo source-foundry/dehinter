@@ -160,9 +160,9 @@ def remove_glyf_instructions(tt):
 def update_gasp_table(tt):
     """Modifies the following gasp table fields:
           1) rangeMaxPPEM changed to 65535
-          2) rangeGaspBehavior changed to bit mask 0b1111 = 15"""
-    if tt["gasp"].gaspRange != {65535: 15}:
-        tt["gasp"].gaspRange = {65535: 15}
+          2) rangeGaspBehavior changed to 0x000a (symmetric grayscale, no gridfit)
+    if tt["gasp"].gaspRange != {65535: 0x000a}:
+        tt["gasp"].gaspRange = {65535: 0x000a}
         return True
     else:
         return False
