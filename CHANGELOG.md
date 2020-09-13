@@ -1,5 +1,14 @@
 # Changelog
 
+## v2.0.0
+
+Backwards incompatible gasp table change introduced in this release
+
+- modified dehinted gasp table definition to grayscale, symmetric smoothing behavior (bit flag 0x000A).  The previous default was bit flag 0x000f which defines gridfit, grayscale, symmetric gridfit, symmetric smoothing.  Our previous default is the *default* behavior in `ttfautohint -d` to our knowledge.  This change is a departure from the `ttfautohint -d` default behavior. (pull request #39, thanks Aaron!)
+- added type hints and mypy static type checking
+- updated fontTools dependency to v4.14.0
+- black source formatting applied to Python sources
+
 ## v1.0.0
 
 - updated fontTools and associated dependencies to v4.6.0 release
