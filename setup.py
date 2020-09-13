@@ -70,7 +70,7 @@ setup(
     python_requires=REQUIRES_PYTHON,
     entry_points={"console_scripts": ["dehinter = dehinter.__main__:main"]},
     classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
         "Environment :: Console",
         "Environment :: Other Environment",
         "Intended Audience :: Developers",
