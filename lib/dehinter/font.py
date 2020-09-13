@@ -62,8 +62,8 @@ def has_vdmx_table(tt):
 
 def is_truetype_font(filepath):
     """Tests that a font has the TrueType file signature of either:
-         1) b'\x00\x01\x00\x00'
-         2) b'\x74\x72\x75\x65' == 'true'"""
+    1) b'\x00\x01\x00\x00'
+    2) b'\x74\x72\x75\x65' == 'true'"""
     with open(filepath, "rb") as f:
         file_signature = f.read(4)
 
@@ -159,10 +159,10 @@ def remove_glyf_instructions(tt):
 # ========================================================
 def update_gasp_table(tt):
     """Modifies the following gasp table fields:
-          1) rangeMaxPPEM changed to 65535
-          2) rangeGaspBehavior changed to 0x000a (symmetric grayscale, no gridfit)"""
-    if tt["gasp"].gaspRange != {65535: 0x000a}:
-        tt["gasp"].gaspRange = {65535: 0x000a}
+    1) rangeMaxPPEM changed to 65535
+    2) rangeGaspBehavior changed to 0x000a (symmetric grayscale, no gridfit)"""
+    if tt["gasp"].gaspRange != {65535: 0x000A}:
+        tt["gasp"].gaspRange = {65535: 0x000A}
         return True
     else:
         return False
