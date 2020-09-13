@@ -38,7 +38,9 @@ FILEPATH_DEHINTED_TTF_2 = os.path.join(
     "tests", "test_files", "fonts", "NotoSans-Regular-dehinted.ttf"
 )
 
-FILEPATH_HINTED_TTF_3 = os.path.join("tests", "test_files", "fonts", "Ubuntu-Regular.ttf")
+FILEPATH_HINTED_TTF_3 = os.path.join(
+    "tests", "test_files", "fonts", "Ubuntu-Regular.ttf"
+)
 
 
 # ========================================================
@@ -251,20 +253,22 @@ def test_remove_glyf_instructions_dehinted_font():
 def test_update_gasp_table():
     tt = TTFont(FILEPATH_HINTED_TTF)
     assert update_gasp_table(tt) is True
-    assert tt["gasp"].gaspRange == {65535: 15}
+    assert tt["gasp"].gaspRange == {65535: 0x000A}
 
 
 def test_update_gasp_table_previous_correct_definition():
-    tt = TTFont(FILEPATH_HINTED_TTF_2)
+    tt = TTFont(FILEPATH_DEHINTED_TTF_2)
     assert update_gasp_table(tt) is False
-    assert tt["gasp"].gaspRange == {65535: 15}
+    assert tt["gasp"].gaspRange == {65535: 0x000A}
 
 
 # =========================================
 # maxp table edits
 # =========================================
 def test_update_maxp_table():
-    tt = TTFont(FILEPATH_HINTED_TTF_2)  # test in Noto Sans as all values are modified there
+    tt = TTFont(
+        FILEPATH_HINTED_TTF_2
+    )  # test in Noto Sans as all values are modified there
     assert update_maxp_table(tt) is True
     assert tt["maxp"].maxZones == 0
     assert tt["maxp"].maxTwilightPoints == 0

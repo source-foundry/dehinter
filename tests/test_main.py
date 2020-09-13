@@ -13,6 +13,7 @@ import pytest
 #  Integration tests
 #
 
+
 def font_validator(filepath):
     assert os.path.exists(filepath)
     tt = TTFont(filepath)
@@ -29,7 +30,7 @@ def font_validator(filepath):
             assert not hasattr(glyph, "program")
         if hasattr(glyph, "program"):
             assert glyph.program.bytecode == array.array("B", [])
-    assert tt["gasp"].gaspRange == {65535: 15}
+    assert tt["gasp"].gaspRange == {65535: 0x000A}
     assert tt["maxp"].maxZones == 0
     assert tt["maxp"].maxTwilightPoints == 0
     assert tt["maxp"].maxStorage == 0
@@ -41,8 +42,12 @@ def font_validator(filepath):
 def test_default_run_roboto():
     test_dir = os.path.join("tests", "test_files", "fonts", "temp")
     notouch_inpath = os.path.join("tests", "test_files", "fonts", "Roboto-Regular.ttf")
-    test_inpath = os.path.join("tests", "test_files", "fonts", "temp", "Roboto-Regular.ttf")
-    test_outpath = os.path.join("tests", "test_files", "fonts", "temp", "Roboto-Regular-dehinted.ttf")
+    test_inpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "Roboto-Regular.ttf"
+    )
+    test_outpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "Roboto-Regular-dehinted.ttf"
+    )
     test_args = [test_inpath]
 
     # setup
@@ -63,9 +68,15 @@ def test_default_run_roboto():
 
 def test_default_run_noto():
     test_dir = os.path.join("tests", "test_files", "fonts", "temp")
-    notouch_inpath = os.path.join("tests", "test_files", "fonts", "NotoSans-Regular.ttf")
-    test_inpath = os.path.join("tests", "test_files", "fonts", "temp", "NotoSans-Regular.ttf")
-    test_outpath = os.path.join("tests", "test_files", "fonts", "temp", "NotoSans-Regular-dehinted.ttf")
+    notouch_inpath = os.path.join(
+        "tests", "test_files", "fonts", "NotoSans-Regular.ttf"
+    )
+    test_inpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "NotoSans-Regular.ttf"
+    )
+    test_outpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "NotoSans-Regular-dehinted.ttf"
+    )
     test_args = [test_inpath]
 
     # setup
@@ -88,8 +99,12 @@ def test_default_run_ubuntu():
     """This is used to test VDMX table removal"""
     test_dir = os.path.join("tests", "test_files", "fonts", "temp")
     notouch_inpath = os.path.join("tests", "test_files", "fonts", "Ubuntu-Regular.ttf")
-    test_inpath = os.path.join("tests", "test_files", "fonts", "temp", "Ubuntu-Regular.ttf")
-    test_outpath = os.path.join("tests", "test_files", "fonts", "temp", "Ubuntu-Regular-dehinted.ttf")
+    test_inpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "Ubuntu-Regular.ttf"
+    )
+    test_outpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "Ubuntu-Regular-dehinted.ttf"
+    )
     test_args = [test_inpath]
 
     # setup
@@ -111,8 +126,12 @@ def test_default_run_ubuntu():
 def test_run_roboto_keep_cvt():
     test_dir = os.path.join("tests", "test_files", "fonts", "temp")
     notouch_inpath = os.path.join("tests", "test_files", "fonts", "Roboto-Regular.ttf")
-    test_inpath = os.path.join("tests", "test_files", "fonts", "temp", "Roboto-Regular.ttf")
-    test_outpath = os.path.join("tests", "test_files", "fonts", "temp", "Roboto-Regular-dehinted.ttf")
+    test_inpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "Roboto-Regular.ttf"
+    )
+    test_outpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "Roboto-Regular-dehinted.ttf"
+    )
     test_args = [test_inpath, "--keep-cvt"]
 
     # setup
@@ -135,8 +154,12 @@ def test_run_roboto_keep_cvt():
 def test_run_roboto_keep_fpgm():
     test_dir = os.path.join("tests", "test_files", "fonts", "temp")
     notouch_inpath = os.path.join("tests", "test_files", "fonts", "Roboto-Regular.ttf")
-    test_inpath = os.path.join("tests", "test_files", "fonts", "temp", "Roboto-Regular.ttf")
-    test_outpath = os.path.join("tests", "test_files", "fonts", "temp", "Roboto-Regular-dehinted.ttf")
+    test_inpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "Roboto-Regular.ttf"
+    )
+    test_outpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "Roboto-Regular-dehinted.ttf"
+    )
     test_args = [test_inpath, "--keep-fpgm"]
 
     # setup
@@ -159,8 +182,12 @@ def test_run_roboto_keep_fpgm():
 def test_run_roboto_keep_hdmx():
     test_dir = os.path.join("tests", "test_files", "fonts", "temp")
     notouch_inpath = os.path.join("tests", "test_files", "fonts", "Roboto-Regular.ttf")
-    test_inpath = os.path.join("tests", "test_files", "fonts", "temp", "Roboto-Regular.ttf")
-    test_outpath = os.path.join("tests", "test_files", "fonts", "temp", "Roboto-Regular-dehinted.ttf")
+    test_inpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "Roboto-Regular.ttf"
+    )
+    test_outpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "Roboto-Regular-dehinted.ttf"
+    )
     test_args = [test_inpath, "--keep-hdmx"]
 
     # setup
@@ -183,8 +210,12 @@ def test_run_roboto_keep_hdmx():
 def test_run_roboto_keep_ltsh():
     test_dir = os.path.join("tests", "test_files", "fonts", "temp")
     notouch_inpath = os.path.join("tests", "test_files", "fonts", "Roboto-Regular.ttf")
-    test_inpath = os.path.join("tests", "test_files", "fonts", "temp", "Roboto-Regular.ttf")
-    test_outpath = os.path.join("tests", "test_files", "fonts", "temp", "Roboto-Regular-dehinted.ttf")
+    test_inpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "Roboto-Regular.ttf"
+    )
+    test_outpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "Roboto-Regular-dehinted.ttf"
+    )
     test_args = [test_inpath, "--keep-ltsh"]
 
     # setup
@@ -207,8 +238,12 @@ def test_run_roboto_keep_ltsh():
 def test_run_roboto_keep_prep():
     test_dir = os.path.join("tests", "test_files", "fonts", "temp")
     notouch_inpath = os.path.join("tests", "test_files", "fonts", "Roboto-Regular.ttf")
-    test_inpath = os.path.join("tests", "test_files", "fonts", "temp", "Roboto-Regular.ttf")
-    test_outpath = os.path.join("tests", "test_files", "fonts", "temp", "Roboto-Regular-dehinted.ttf")
+    test_inpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "Roboto-Regular.ttf"
+    )
+    test_outpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "Roboto-Regular-dehinted.ttf"
+    )
     test_args = [test_inpath, "--keep-prep"]
 
     # setup
@@ -230,9 +265,15 @@ def test_run_roboto_keep_prep():
 
 def test_run_noto_keep_ttfa():  # this has to be tested in Noto as it contains a TTFA table
     test_dir = os.path.join("tests", "test_files", "fonts", "temp")
-    notouch_inpath = os.path.join("tests", "test_files", "fonts", "NotoSans-Regular.ttf")
-    test_inpath = os.path.join("tests", "test_files", "fonts", "temp", "NotoSans-Regular.ttf")
-    test_outpath = os.path.join("tests", "test_files", "fonts", "temp", "NotoSans-Regular-dehinted.ttf")
+    notouch_inpath = os.path.join(
+        "tests", "test_files", "fonts", "NotoSans-Regular.ttf"
+    )
+    test_inpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "NotoSans-Regular.ttf"
+    )
+    test_outpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "NotoSans-Regular-dehinted.ttf"
+    )
     test_args = [test_inpath, "--keep-ttfa"]
 
     # setup
@@ -256,8 +297,12 @@ def test_default_run_ubuntu_keep_vdmx():
     """This is used to test VDMX table removal"""
     test_dir = os.path.join("tests", "test_files", "fonts", "temp")
     notouch_inpath = os.path.join("tests", "test_files", "fonts", "Ubuntu-Regular.ttf")
-    test_inpath = os.path.join("tests", "test_files", "fonts", "temp", "Ubuntu-Regular.ttf")
-    test_outpath = os.path.join("tests", "test_files", "fonts", "temp", "Ubuntu-Regular-dehinted.ttf")
+    test_inpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "Ubuntu-Regular.ttf"
+    )
+    test_outpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "Ubuntu-Regular-dehinted.ttf"
+    )
     test_args = [test_inpath, "--keep-vdmx"]
 
     # setup
@@ -280,8 +325,12 @@ def test_default_run_ubuntu_keep_vdmx():
 def test_run_roboto_keep_glyf():
     test_dir = os.path.join("tests", "test_files", "fonts", "temp")
     notouch_inpath = os.path.join("tests", "test_files", "fonts", "Roboto-Regular.ttf")
-    test_inpath = os.path.join("tests", "test_files", "fonts", "temp", "Roboto-Regular.ttf")
-    test_outpath = os.path.join("tests", "test_files", "fonts", "temp", "Roboto-Regular-dehinted.ttf")
+    test_inpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "Roboto-Regular.ttf"
+    )
+    test_outpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "Roboto-Regular-dehinted.ttf"
+    )
     test_args = [test_inpath, "--keep-glyf"]
 
     # setup
@@ -305,8 +354,12 @@ def test_run_roboto_keep_glyf():
 def test_run_roboto_keep_gasp():
     test_dir = os.path.join("tests", "test_files", "fonts", "temp")
     notouch_inpath = os.path.join("tests", "test_files", "fonts", "Roboto-Regular.ttf")
-    test_inpath = os.path.join("tests", "test_files", "fonts", "temp", "Roboto-Regular.ttf")
-    test_outpath = os.path.join("tests", "test_files", "fonts", "temp", "Roboto-Regular-dehinted.ttf")
+    test_inpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "Roboto-Regular.ttf"
+    )
+    test_outpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "Roboto-Regular-dehinted.ttf"
+    )
     test_args = [test_inpath, "--keep-gasp"]
 
     # setup
@@ -328,9 +381,15 @@ def test_run_roboto_keep_gasp():
 
 def test_run_noto_keep_maxp():
     test_dir = os.path.join("tests", "test_files", "fonts", "temp")
-    notouch_inpath = os.path.join("tests", "test_files", "fonts", "NotoSans-Regular.ttf")
-    test_inpath = os.path.join("tests", "test_files", "fonts", "temp", "NotoSans-Regular.ttf")
-    test_outpath = os.path.join("tests", "test_files", "fonts", "temp", "NotoSans-Regular-dehinted.ttf")
+    notouch_inpath = os.path.join(
+        "tests", "test_files", "fonts", "NotoSans-Regular.ttf"
+    )
+    test_inpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "NotoSans-Regular.ttf"
+    )
+    test_outpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "NotoSans-Regular-dehinted.ttf"
+    )
     test_args = [test_inpath, "--keep-maxp"]
 
     # setup
@@ -358,8 +417,12 @@ def test_run_noto_keep_maxp():
 def test_run_roboto_keep_head():
     test_dir = os.path.join("tests", "test_files", "fonts", "temp")
     notouch_inpath = os.path.join("tests", "test_files", "fonts", "Roboto-Regular.ttf")
-    test_inpath = os.path.join("tests", "test_files", "fonts", "temp", "Roboto-Regular.ttf")
-    test_outpath = os.path.join("tests", "test_files", "fonts", "temp", "Roboto-Regular-dehinted.ttf")
+    test_inpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "Roboto-Regular.ttf"
+    )
+    test_outpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "Roboto-Regular-dehinted.ttf"
+    )
     test_args = [test_inpath, "--keep-head"]
 
     # setup
@@ -382,8 +445,12 @@ def test_run_roboto_keep_head():
 def test_run_with_outfile_path_roboto():
     test_dir = os.path.join("tests", "test_files", "fonts", "temp")
     notouch_inpath = os.path.join("tests", "test_files", "fonts", "Roboto-Regular.ttf")
-    test_inpath = os.path.join("tests", "test_files", "fonts", "temp", "Roboto-Regular.ttf")
-    test_outpath = os.path.join("tests", "test_files", "fonts", "temp", "Roboto-Regular-dehintilio.ttf")
+    test_inpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "Roboto-Regular.ttf"
+    )
+    test_outpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "Roboto-Regular-dehintilio.ttf"
+    )
     test_args = [test_inpath, "--out", test_outpath]
 
     # setup
@@ -404,9 +471,15 @@ def test_run_with_outfile_path_roboto():
 
 def test_run_with_outfile_path_noto():
     test_dir = os.path.join("tests", "test_files", "fonts", "temp")
-    notouch_inpath = os.path.join("tests", "test_files", "fonts", "NotoSans-Regular.ttf")
-    test_inpath = os.path.join("tests", "test_files", "fonts", "temp", "NotoSans-Regular.ttf")
-    test_outpath = os.path.join("tests", "test_files", "fonts", "temp", "NotoSans-Regular-dehintilio.ttf")
+    notouch_inpath = os.path.join(
+        "tests", "test_files", "fonts", "NotoSans-Regular.ttf"
+    )
+    test_inpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "NotoSans-Regular.ttf"
+    )
+    test_outpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "NotoSans-Regular-dehintilio.ttf"
+    )
     test_args = [test_inpath, "-o", test_outpath]
 
     # setup
@@ -429,6 +502,7 @@ def test_run_with_outfile_path_noto():
 # Validation error testing
 #
 
+
 def test_run_with_invalid_filepath():
     with pytest.raises(SystemExit):
         run(["bogusfile.txt"])
@@ -441,9 +515,15 @@ def test_run_with_non_font_file():
 
 def test_run_dehinted_file_write_inplace():
     test_dir = os.path.join("tests", "test_files", "fonts", "temp")
-    notouch_inpath = os.path.join("tests", "test_files", "fonts", "NotoSans-Regular.ttf")
-    test_inpath = os.path.join("tests", "test_files", "fonts", "temp", "NotoSans-Regular.ttf")
-    test_outpath = os.path.join("tests", "test_files", "fonts", "temp", "NotoSans-Regular.ttf")
+    notouch_inpath = os.path.join(
+        "tests", "test_files", "fonts", "NotoSans-Regular.ttf"
+    )
+    test_inpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "NotoSans-Regular.ttf"
+    )
+    test_outpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "NotoSans-Regular.ttf"
+    )
     test_args = [test_inpath, "-o", test_outpath]
 
     # setup
