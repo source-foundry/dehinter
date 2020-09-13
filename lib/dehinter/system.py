@@ -13,9 +13,10 @@
 # limitations under the License.
 
 import os
+from typing import Tuple, Union
 
 
-def get_filesize(filepath):
+def get_filesize(filepath: Union[str, bytes, "os.PathLike[str]"]) -> Tuple[str, str]:
     """Returns formatted file size tuple fit for printing to end user."""
     filesize = os.path.getsize(filepath)
     kb_factor = 1 << 10

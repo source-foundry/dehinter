@@ -13,16 +13,16 @@
 # limitations under the License.
 
 
-def is_bit_k_set(int_val, k):
+def is_bit_k_set(int_val: int, k: int) -> bool:
     """Tests if the value of bit at offset k in an integer is set"""
     return (int_val & (1 << k)) != 0
 
 
-def clear_bit_k(int_val, k):
+def clear_bit_k(int_val: int, k: int) -> int:
     """Clears the bit at offset k"""
     return int_val & ~(1 << k)
 
 
-def set_bit_k(int_val, k):
+def set_bit_k(int_val: int, k: int) -> int:
     """Sets the bit at offset k"""
     return int_val | (1 << k)

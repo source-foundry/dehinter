@@ -13,14 +13,17 @@
 # limitations under the License.
 
 import os
+from typing import Union
 
 
-def filepath_exists(filepath):
+def filepath_exists(filepath: Union[bytes, str, "os.PathLike[str]"]) -> bool:
     """Tests a file path string to confirm that the file exists on the file system"""
     return os.path.isfile(filepath)
 
 
-def get_default_out_path(filepath):
+def get_default_out_path(
+    filepath: os.PathLike,
+) -> Union[str, bytes]:
     """Returns an updated file path that is used as dehinted file default when user
     does not specify an out file path."""
     dir_path, file_path = os.path.split(filepath)

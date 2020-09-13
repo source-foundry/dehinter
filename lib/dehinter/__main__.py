@@ -16,8 +16,9 @@ import argparse
 import os
 import pprint
 import sys
+from typing import List
 
-from fontTools.ttLib import TTFont
+from fontTools.ttLib import TTFont  # type: ignore
 
 from dehinter import __version__
 from dehinter.font import is_truetype_font
@@ -46,11 +47,11 @@ from dehinter.paths import filepath_exists, get_default_out_path
 from dehinter.system import get_filesize
 
 
-def main():  # pragma: no cover
+def main() -> None:  # pragma: no cover
     run(sys.argv[1:])
 
 
-def run(argv):
+def run(argv: List[str]) -> None:
     # instantiate pretty printer
     pp = pprint.PrettyPrinter(indent=4)
 
