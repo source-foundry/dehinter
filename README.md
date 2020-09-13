@@ -80,7 +80,7 @@ Python source files are linted with `flake8`. See the Makefile `test-lint` targe
 
 ### Source file static type checks
 
-Static type checks are performed on Python source files with `pytype`. See the Makefile `test-type-check` target for details.
+Static type checks are performed on Python source files with `mypy` and are based on type annotations in the Python source files. See the Makefile `test-type-check` target for details.
 
 ### Testing
 
