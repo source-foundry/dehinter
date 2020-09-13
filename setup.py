@@ -18,7 +18,7 @@ INSTALL_REQUIRES = [
 # Optional packages
 EXTRAS_REQUIRES = {
     # for developer installs
-    "dev": ["coverage", "pytest", "tox", "flake8", "pytype"],
+    "dev": ["coverage", "pytest", "tox", "flake8", "mypy"],
     # for maintainer installs
     "maintain": ["wheel", "setuptools", "twine"],
 }

@@ -13,6 +13,8 @@
 # limitations under the License.
 
 import array
+import os
+from typing import Union
 
 from dehinter.bitops import is_bit_k_set, clear_bit_k
 
@@ -20,52 +22,52 @@ from dehinter.bitops import is_bit_k_set, clear_bit_k
 # ========================================================
 # Utilities
 # ========================================================
-def has_cvt_table(tt):
+def has_cvt_table(tt) -> bool:
     """Tests for the presence of a cvt table in a TrueType font."""
     return "cvt " in tt
 
 
-def has_fpgm_table(tt):
+def has_fpgm_table(tt) -> bool:
     """Tests for the presence of a fpgm table in a TrueType font."""
     return "fpgm" in tt
 
 
-def has_gasp_table(tt):
+def has_gasp_table(tt) -> bool:
     """Tests for the presence of a gasp table in a TrueType font."""
     return "gasp" in tt
 
 
-def has_hdmx_table(tt):
+def has_hdmx_table(tt) -> bool:
     """Tests for the presence of a hdmx table in a TrueType font."""
     return "hdmx" in tt
 
 
-def has_ltsh_table(tt):
+def has_ltsh_table(tt) -> bool:
     """Tests for the presence of a LTSH table in a TrueType font."""
     return "LTSH" in tt
 
 
-def has_prep_table(tt):
+def has_prep_table(tt) -> bool:
     """Tests for the presence of a prep table in a TrueType font."""
     return "prep" in tt
 
 
-def has_ttfa_table(tt):
+def has_ttfa_table(tt) -> bool:
     """Tests for the presence of a TTFA table in a TrueType font."""
     return "TTFA" in tt
 
 
-def has_vdmx_table(tt):
+def has_vdmx_table(tt) -> bool:
     """Tests for the presence of a VDMX table in a TrueType font."""
     return "VDMX" in tt
 
 
-def is_truetype_font(filepath):
+def is_truetype_font(filepath: Union[bytes, str, "os.PathLike[str]"]) -> bool:
     """Tests that a font has the TrueType file signature of either:
     1) b'\x00\x01\x00\x00'
     2) b'\x74\x72\x75\x65' == 'true'"""
     with open(filepath, "rb") as f:
-        file_signature = f.read(4)
+        file_signature: bytes = f.read(4)
 
         return file_signature in (b"\x00\x01\x00\x00", b"\x74\x72\x75\x65")
 
@@ -73,7 +75,7 @@ def is_truetype_font(filepath):
 # ========================================================
 # OpenType table removal
 # ========================================================
-def remove_cvt_table(tt):
+def remove_cvt_table(tt) -> None:
     """Removes cvt table from a fontTools.ttLib.TTFont object"""
     try:
         del tt["cvt "]
@@ -82,7 +84,7 @@ def remove_cvt_table(tt):
         pass
 
 
-def remove_fpgm_table(tt):
+def remove_fpgm_table(tt) -> None:
     """Removes fpgm table from a fontTools.ttLib.TTFont object"""
     try:
         del tt["fpgm"]
@@ -91,7 +93,7 @@ def remove_fpgm_table(tt):
         pass
 
 
-def remove_hdmx_table(tt):
+def remove_hdmx_table(tt) -> None:
     """Removes hdmx table from a fontTools.ttLib.TTFont object"""
     try:
         del tt["hdmx"]
@@ -100,7 +102,7 @@ def remove_hdmx_table(tt):
         pass
 
 
-def remove_ltsh_table(tt):
+def remove_ltsh_table(tt) -> None:
     """Removes LTSH table from a fontTools.ttLib.TTFont object."""
     try:
         del tt["LTSH"]
@@ -109,7 +111,7 @@ def remove_ltsh_table(tt):
         pass
 
 
-def remove_prep_table(tt):
+def remove_prep_table(tt) -> None:
     """Removes prep table from a fontTools.ttLib.TTFont object"""
     try:
         del tt["prep"]
@@ -118,7 +120,7 @@ def remove_prep_table(tt):
         pass
 
 
-def remove_ttfa_table(tt):
+def remove_ttfa_table(tt) -> None:
     """Removes TTFA table from a fontTools.ttLib.TTFont object"""
     try:
         del tt["TTFA"]
@@ -127,7 +129,7 @@ def remove_ttfa_table(tt):
         pass
 
 
-def remove_vdmx_table(tt):
+def remove_vdmx_table(tt) -> None:
     """Removes TTFA table from a fontTools.ttLib.TTFont object"""
     try:
         del tt["VDMX"]
@@ -139,9 +141,9 @@ def remove_vdmx_table(tt):
 # ========================================================
 # glyf table instruction set bytecode removal
 # ========================================================
-def remove_glyf_instructions(tt):
+def remove_glyf_instructions(tt) -> int:
     """Removes instruction set bytecode from glyph definitions in the glyf table."""
-    glyph_number = 0
+    glyph_number: int = 0
     for glyph in tt["glyf"].glyphs.values():
         glyph.expand(tt["glyf"])
         if hasattr(glyph, "program") and glyph.program.bytecode != array.array("B", []):
@@ -157,7 +159,7 @@ def remove_glyf_instructions(tt):
 # ========================================================
 # gasp table edit
 # ========================================================
-def update_gasp_table(tt):
+def update_gasp_table(tt) -> bool:
     """Modifies the following gasp table fields:
     1) rangeMaxPPEM changed to 65535
     2) rangeGaspBehavior changed to 0x000a (symmetric grayscale, no gridfit)"""
@@ -171,9 +173,9 @@ def update_gasp_table(tt):
 # =========================================
 # maxp table edits
 # =========================================
-def update_maxp_table(tt):
+def update_maxp_table(tt) -> bool:
     """Update the maxp table with new values based on elimination of instruction sets."""
-    changed = False
+    changed: bool = False
     if tt["maxp"].maxZones != 0:
         tt["maxp"].maxZones = 0
         changed = True
@@ -198,7 +200,7 @@ def update_maxp_table(tt):
 # =========================================
 # head table edits
 # =========================================
-def update_head_table_flags(tt):
+def update_head_table_flags(tt) -> bool:
     if is_bit_k_set(tt["head"].flags, 4):
         # confirm that there is no LTSH or hdmx table
         # bit 4 should be set if either of these tables are present in font

@@ -32,7 +32,7 @@ test-lint:
 	flake8 --ignore=E501,W50 lib/dehinter
 
 test-type-check:
-	pytype lib/dehinter
+	mypy lib/dehinter
 
 test-unit:
 	tox
