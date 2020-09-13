@@ -24,4 +24,6 @@ def test_get_default_filepath_without_dir():
 def test_get_default_filepath_with_dir():
     path = os.path.join("tests", "test_files", "fonts", "Roboto-Regular.ttf")
     default_path = get_default_out_path(path)
-    assert default_path == os.path.join("tests", "test_files", "fonts", "Roboto-Regular-dehinted.ttf")
+    assert default_path == os.path.join(
+        "tests", "test_files", "fonts", "Roboto-Regular-dehinted.ttf"
+    )
