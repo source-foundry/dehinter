@@ -12,14 +12,15 @@ EMAIL = "chris@sourcefoundry.org"
 AUTHOR = "Source Foundry Authors and Contributors"
 REQUIRES_PYTHON = ">=3.6.0"
 
-INSTALL_REQUIRES = ["fontTools==4.14.0",
-                    ]
+INSTALL_REQUIRES = [
+    "fontTools==4.14.0",
+]
 # Optional packages
 EXTRAS_REQUIRES = {
     # for developer installs
     "dev": ["coverage", "pytest", "tox", "flake8", "pytype"],
     # for maintainer installs
-    "maintain": ["wheel", "setuptools", "twine"]
+    "maintain": ["wheel", "setuptools", "twine"],
 }
 
 this_file_path = os.path.abspath(os.path.dirname(__file__))
