@@ -1,5 +1,10 @@
 # Changelog
 
+## v2.0.1
+
+- update setup.py classifiers to properly define this project as status 5: Production / Stable
+- update README.md with transition to `mypy` as our static type check tool
+
 ## v2.0.0
 
 Backwards incompatible gasp table change introduced in this release
