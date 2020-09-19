@@ -97,28 +97,25 @@ def run(argv: List[str]) -> None:
     #  (1) file path request is a file
     if not filepath_exists(args.INFILE):
         sys.stderr.write(
-            "[!] Error: '{}' is not a valid file path.{}".format(
-                args.INFILE, os.linesep
-            )
+            f"[!] Error: '{args.INFILE}' is not a valid file path.{os.linesep}"
         )
-        sys.stderr.write("[!] Request canceled.{}".format(os.linesep))
+        sys.stderr.write(f"[!] Request canceled.{os.linesep}")
         sys.exit(1)
     #  (2) the file is a ttf font file (based on the 4 byte file signature
     if not is_truetype_font(args.INFILE):
         sys.stderr.write(
-            "[!] Error: '{}' does not appear to be a TrueType font file.{}".format(
-                args.INFILE, os.linesep
-            )
+            f"[!] Error: '{args.INFILE}' does not appear to be a TrueType font "
+            f"file.{os.linesep}"
         )
-        sys.stderr.write("[!] Request canceled.{}".format(os.linesep))
+        sys.stderr.write(f"[!] Request canceled.{os.linesep}")
         sys.exit(1)
     #   (3) confirm that out path is not the same as in path
     #    This tool does not support writing dehinted files in place over hinted version
     if args.INFILE == args.out:
         sys.stderr.write(
-            "[!] Error: You are attempting to overwrite the hinted file with the dehinted file.  This is not supported. Please choose a different file path for the dehinted file.{}".format(
-                os.linesep
-            )
+            f"[!] Error: You are attempting to overwrite the hinted file with the "
+            f"dehinted file.  This is not supported. Please choose a different file "
+            f"path for the dehinted file.{os.linesep}"
         )
         sys.exit(1)
     # Execution
@@ -128,9 +125,7 @@ def run(argv: List[str]) -> None:
         tt = TTFont(args.INFILE)
     except Exception as e:
         sys.stderr.write(
-            "[!] Error: Unable to create font object with '{}' -> {}".format(
-                args.INFILE, str(e)
-            )
+            f"[!] Error: Unable to create font object with '{args.INFILE}' -> {str(e)}"
         )
         sys.exit(1)
 
@@ -195,29 +190,22 @@ def run(argv: List[str]) -> None:
         number_glyfs_edited = remove_glyf_instructions(tt)
         if number_glyfs_edited > 0:
             print(
-                "[-] Removed glyf table instruction bytecode from {} glyphs".format(
-                    number_glyfs_edited
-                )
+                f"[-] Removed glyf table instruction bytecode from "
+                f"{number_glyfs_edited} glyphs"
             )
 
     #  (3) Edit gasp table
     if not args.keep_gasp:
         if has_gasp_table(tt):
             if update_gasp_table(tt):
-                print(
-                    "[Δ] New gasp table values:{}    {}".format(
-                        os.linesep, pp.pformat(tt["gasp"].__dict__)
-                    )
-                )
+                gasp_string = pp.pformat(tt["gasp"].__dict__)
+                print(f"[Δ] New gasp table values:{os.linesep}    {gasp_string}")
 
     #  (4) Edit maxp table
     if not args.keep_maxp:
         if update_maxp_table(tt):
-            print(
-                "[Δ] New maxp table values:{}    {}".format(
-                    os.linesep, pp.pformat(tt["maxp"].__dict__)
-                )
-            )
+            maxp_string = pp.pformat(tt["maxp"].__dict__)
+            print(f"[Δ] New maxp table values:{os.linesep}    {maxp_string}")
 
     #  (5) Edit head table flags to clear bit 4
     if not args.keep_head:
@@ -227,19 +215,18 @@ def run(argv: List[str]) -> None:
     # File write
     # ----------
     if args.out:
-        # validation performed above to prevent this file path definition from being the same
-        # as the in file path.  Write in place over a hinted file is not supported
+        # validation performed above to prevent this file path definition from
+        # being the same as the in file path.  Write in place over a hinted
+        # file is not supported
         outpath = args.out
     else:
         outpath = get_default_out_path(args.INFILE)
 
     try:
         tt.save(outpath)
-        print("{}[+] Saved dehinted font as '{}'".format(os.linesep, outpath))
+        print("{os.linesep}[+] Saved dehinted font as '{outpath}'")
     except Exception as e:  # pragma: no cover
-        sys.stderr.write(
-            "[!] Error: Unable to save dehinted font file: {}".format(str(e))
-        )
+        sys.stderr.write(f"[!] Error: Unable to save dehinted font file: {str(e)}")
 
     # File size comparison
     # --------------------
@@ -247,6 +234,6 @@ def run(argv: List[str]) -> None:
     outfile_size_tuple = get_filesize(
         outpath
     )  # depends on outpath definition defined during file write
-    print("{}[*] File sizes:".format(os.linesep))
-    print("    {}{} (hinted)".format(infile_size_tuple[0], infile_size_tuple[1]))
-    print("    {}{} (dehinted)".format(outfile_size_tuple[0], outfile_size_tuple[1]))
+    print(f"{os.linesep}[*] File sizes:")
+    print(f"    {infile_size_tuple[0]}{infile_size_tuple[1]} (hinted)")
+    print(f"    {outfile_size_tuple[0]}{outfile_size_tuple[1]} (dehinted)")
