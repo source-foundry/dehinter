@@ -2,8 +2,9 @@
 <br/>
 
 [![PyPI](https://img.shields.io/pypi/v/dehinter?color=blueviolet&label=PyPI&logo=python&logoColor=white)](https://pypi.org/project/dehinter/)
-[![Build Status](https://travis-ci.com/source-foundry/dehinter.svg?branch=master)](https://travis-ci.com/source-foundry/dehinter)
-[![Build status](https://ci.appveyor.com/api/projects/status/08uftyy98ni837ak?svg=true)](https://ci.appveyor.com/project/chrissimpkins/dehinter)
+![Python CI](https://github.com/source-foundry/dehinter/workflows/Python%20CI/badge.svg)
+![Python Lints](https://github.com/source-foundry/dehinter/workflows/Python%20Lints/badge.svg)
+![Python Type Checks](https://github.com/source-foundry/dehinter/workflows/Python%20Type%20Checks/badge.svg)
 [![codecov](https://codecov.io/gh/source-foundry/dehinter/branch/master/graph/badge.svg)](https://codecov.io/gh/source-foundry/dehinter)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/a2f54fac2c544f389e0066cfa159dfe8)](https://www.codacy.com/app/SourceFoundry/dehinter?utm_source=github.com&utm_medium=referral&utm_content=source-foundry/dehinter&utm_campaign=Badge_Grade)
 
