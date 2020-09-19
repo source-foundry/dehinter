@@ -45,6 +45,6 @@ jobs:
       - name: Generate coverage report
         run: |
           pip install pytest-cov
-          pytest --cov=lib/dehinter --cov-report=xml
+          pytest --cov=lib --cov-report=xml
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
