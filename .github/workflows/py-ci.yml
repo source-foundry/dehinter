@@ -24,6 +24,7 @@ jobs:
       - name: Get pip cache dir
         id: pip-cache
         run: |
+          pip install --upgrade pip
           echo "::set-output name=dir::$(pip cache dir)"
       - name: pip cache
         uses: actions/cache@v2
