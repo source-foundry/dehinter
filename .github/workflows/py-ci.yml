@@ -40,5 +40,7 @@ jobs:
           update-pip: "true"
           update-setuptools: "true"
           update-wheel: "true"
+      - name: Install project
+        run: pip install .
       - name: Python unit tests
         run: pytest
