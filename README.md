@@ -85,7 +85,7 @@ Static type checks are performed on Python source files with `mypy` and are base
 
 ### Testing
 
-The project runs continuous integration testing on [Travis CI](https://travis-ci.org/source-foundry/dehinter) and [Appveyor CI](https://ci.appveyor.com/project/chrissimpkins/dehinter) with the `pytest` and `tox` testing toolchain. Test modules are located in the `tests` directory of the repository.
+The project runs continuous integration testing on GitHub Actions runners with the `pytest` testing toolchain. Test modules are located in the `tests` directory of the repository.
 
 Local testing by Python interpreter version can be performed with the following command executed from the root of the repository:
 
