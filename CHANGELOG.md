@@ -1,5 +1,12 @@
 # Changelog
 
+## v2.0.2
+
+- refactor string formatting to f-strings
+- added GitHub Action CI workflows
+- removed Travis CI testing
+- removed Appveyor CI testing
+
 ## v2.0.1
 
 - update setup.py classifiers to properly define this project as status 5: Production / Stable
