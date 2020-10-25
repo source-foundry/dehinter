@@ -1,5 +1,11 @@
 # Changelog
 
+## v2.0.3
+
+- add cPython 3.9 interpreter testing
+- add CodeQL static source testing
+- update fonttools dependency to v4.16.1
+
 ## v2.0.2
 
 - refactor string formatting to f-strings
