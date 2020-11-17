@@ -1,5 +1,10 @@
 # Changelog
 
+## v2.0.4
+
+- dependency update patch
+- update fonttools dependency to v4.17.1
+
 ## v2.0.3
 
 - add cPython 3.9 interpreter testing
