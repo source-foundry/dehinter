@@ -152,6 +152,13 @@ def test_delete_cvar_table():
     assert ("cvar" in tt) is False
 
 
+def test_delete_cvar_table_when_not_vf():
+    tt = TTFont(FILEPATH_HINTED_TTF)
+    assert ("cvar" in tt) is False
+    remove_cvar_table(tt)
+    assert ("cvar" in tt) is False
+
+
 def test_delete_cvt_table():
     tt = TTFont(FILEPATH_HINTED_TTF)
     assert ("cvt " in tt) is True
