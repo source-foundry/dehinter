@@ -1,5 +1,16 @@
 # Changelog
 
+## v3.0.0
+
+- add support for cvar table removal in variable fonts (backward incompatible change)
+- add new `--keep-cvar` option to toggle cvar table removal off
+- modify default gasp approach to add a gasp table when it is not available in a font (backward incompatible change)
+- add new source formatting Makefile targets
+- add isort package to setup.py extras_requires dev dependencies
+- source import statement formatting
+- update fonttools dependency to v4.22.0
+- update GitHub Actions workflows to use cPython 3.9 (from cPython 3.8)
+
 ## v2.0.4
 
 - dependency update patch
