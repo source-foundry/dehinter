@@ -16,6 +16,7 @@
 
 - Removes OpenType [glyf table](https://docs.microsoft.com/en-us/typography/opentype/spec/glyf) instruction set bytecode data
 - Removes OpenType and other TTF hinting related tables - [cvt table](https://docs.microsoft.com/en-us/typography/opentype/spec/cvt) - [fpgm table](https://docs.microsoft.com/en-us/typography/opentype/spec/fpgm) - [hdmx table](https://docs.microsoft.com/en-us/typography/opentype/spec/hdmx) - [LTSH table](https://docs.microsoft.com/en-us/typography/opentype/spec/ltsh) - [prep table](https://docs.microsoft.com/en-us/typography/opentype/spec/prep) - [TTFA table](https://www.freetype.org/ttfautohint/doc/ttfautohint.html#add-ttfa-info-table) (not part of the OpenType specification) - [VDMX table](https://docs.microsoft.com/en-us/typography/opentype/spec/vdmx)
+- Removes OpenType [cvar table](https://docs.microsoft.com/en-us/typography/opentype/spec/cvar) from variable fonts
 - Updates [gasp table](https://docs.microsoft.com/en-us/typography/opentype/spec/gasp) values
 - Updates [maxp table](https://docs.microsoft.com/en-us/typography/opentype/spec/maxp) values
 - Updates [head table](https://docs.microsoft.com/en-us/typography/opentype/spec/head) bit flags
