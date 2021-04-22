@@ -21,28 +21,30 @@ from typing import List
 from fontTools.ttLib import TTFont  # type: ignore
 
 from dehinter import __version__
-from dehinter.font import is_truetype_font
 from dehinter.font import (
+    has_cvar_table,
     has_cvt_table,
     has_fpgm_table,
-    has_gasp_table,
     has_hdmx_table,
     has_ltsh_table,
     has_prep_table,
     has_ttfa_table,
     has_vdmx_table,
-)
-from dehinter.font import (
+    is_truetype_font,
+    is_variable_font,
+    remove_cvar_table,
     remove_cvt_table,
     remove_fpgm_table,
+    remove_glyf_instructions,
     remove_hdmx_table,
     remove_ltsh_table,
     remove_prep_table,
     remove_ttfa_table,
     remove_vdmx_table,
-    remove_glyf_instructions,
+    update_gasp_table,
+    update_head_table_flags,
+    update_maxp_table,
 )
-from dehinter.font import update_gasp_table, update_head_table_flags, update_maxp_table
 from dehinter.paths import filepath_exists, get_default_out_path
 from dehinter.system import get_filesize
 
@@ -65,6 +67,7 @@ def run(argv: List[str]) -> None:
         "--version", action="version", version="dehinter v{}".format(__version__)
     )
     parser.add_argument("-o", "--out", help="out file path (dehinted font)")
+    parser.add_argument("--keep-cvar", help="keep cvar table", action="store_true")
     parser.add_argument("--keep-cvt", help="keep cvt table", action="store_true")
     parser.add_argument("--keep-fpgm", help="keep fpgm table", action="store_true")
     parser.add_argument("--keep-hdmx", help="keep hdmx table", action="store_true")
@@ -129,13 +132,25 @@ def run(argv: List[str]) -> None:
         )
         sys.exit(1)
 
+    if is_variable_font(tt) and not args.keep_cvar:
+        if has_cvar_table(tt):
+            remove_cvar_table(tt)
+            if not has_cvar_table(tt):
+                print("[-] Removed cvar table")
+            else:  # pragma: no cover
+                sys.stderr.write(
+                    f"[!] Error: failed to remove cvar table from font{os.linesep}"
+                )
+
     if not args.keep_cvt:
         if has_cvt_table(tt):
             remove_cvt_table(tt)
             if not has_cvt_table(tt):
                 print("[-] Removed cvt table")
             else:  # pragma: no cover
-                sys.stderr.write("[!] Error: failed to remove cvt table from font")
+                sys.stderr.write(
+                    f"[!] Error: failed to remove cvt table from font{os.linesep}"
+                )
 
     if not args.keep_fpgm:
         if has_fpgm_table(tt):
@@ -143,7 +158,9 @@ def run(argv: List[str]) -> None:
             if not has_fpgm_table(tt):
                 print("[-] Removed fpgm table")
             else:  # pragma: no cover
-                sys.stderr.write("[!] Error: failed to remove fpgm table from font")
+                sys.stderr.write(
+                    f"[!] Error: failed to remove fpgm table from font{os.linesep}"
+                )
 
     if not args.keep_hdmx:
         if has_hdmx_table(tt):
@@ -151,7 +168,9 @@ def run(argv: List[str]) -> None:
             if not has_hdmx_table(tt):
                 print("[-] Removed hdmx table")
             else:  # pragma: no cover
-                sys.stderr.write("[!] Error: failed to remove hdmx table from font")
+                sys.stderr.write(
+                    f"[!] Error: failed to remove hdmx table from font{os.linesep}"
+                )
 
     if not args.keep_ltsh:
         if has_ltsh_table(tt):
@@ -159,7 +178,9 @@ def run(argv: List[str]) -> None:
             if not has_ltsh_table(tt):
                 print("[-] Removed LTSH table")
             else:  # pragma: no cover
-                sys.stderr.write("[!] Error: failed to remove LTSH table from font")
+                sys.stderr.write(
+                    f"[!] Error: failed to remove LTSH table from font{os.linesep}"
+                )
 
     if not args.keep_prep:
         if has_prep_table(tt):
@@ -167,7 +188,9 @@ def run(argv: List[str]) -> None:
             if not has_prep_table(tt):
                 print("[-] Removed prep table")
             else:  # pragma: no cover
-                sys.stderr.write("[!] Error: failed to remove prep table from font")
+                sys.stderr.write(
+                    f"[!] Error: failed to remove prep table from font{os.linesep}"
+                )
 
     if not args.keep_ttfa:
         if has_ttfa_table(tt):
@@ -175,7 +198,9 @@ def run(argv: List[str]) -> None:
             if not has_ttfa_table(tt):
                 print("[-] Removed TTFA table")
             else:  # pragma: no cover
-                sys.stderr.write("[!] Error: failed to remove TTFA table from font")
+                sys.stderr.write(
+                    f"[!] Error: failed to remove TTFA table from font{os.linesep}"
+                )
 
     if not args.keep_vdmx:
         if has_vdmx_table(tt):
@@ -183,7 +208,9 @@ def run(argv: List[str]) -> None:
             if not has_vdmx_table(tt):
                 print("[-] Removed VDMX table")
             else:  # pragma: no cover
-                sys.stderr.write("[!] Error: failed to remove VDMX table from font")
+                sys.stderr.write(
+                    f"[!] Error: failed to remove VDMX table from font{os.linesep}"
+                )
 
     #  (2) Remove glyf table instruction set bytecode
     if not args.keep_glyf:
@@ -196,10 +223,9 @@ def run(argv: List[str]) -> None:
 
     #  (3) Edit gasp table
     if not args.keep_gasp:
-        if has_gasp_table(tt):
-            if update_gasp_table(tt):
-                gasp_string = pp.pformat(tt["gasp"].__dict__)
-                print(f"[Δ] New gasp table values:{os.linesep}    {gasp_string}")
+        if update_gasp_table(tt):
+            gasp_string = pp.pformat(tt["gasp"].__dict__)
+            print(f"[Δ] New gasp table values:{os.linesep}    {gasp_string}")
 
     #  (4) Edit maxp table
     if not args.keep_maxp:
@@ -224,9 +250,11 @@ def run(argv: List[str]) -> None:
 
     try:
         tt.save(outpath)
-        print("{os.linesep}[+] Saved dehinted font as '{outpath}'")
+        print(f"{os.linesep}[+] Saved dehinted font as '{outpath}'")
     except Exception as e:  # pragma: no cover
-        sys.stderr.write(f"[!] Error: Unable to save dehinted font file: {str(e)}")
+        sys.stderr.write(
+            f"[!] Error: Unable to save dehinted font file: {str(e)}{os.linesep}"
+        )
 
     # File size comparison
     # --------------------
