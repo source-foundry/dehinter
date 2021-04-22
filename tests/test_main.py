@@ -68,9 +68,7 @@ def test_default_run_roboto():
 
 def test_default_run_noto():
     test_dir = os.path.join("tests", "test_files", "fonts", "temp")
-    notouch_inpath = os.path.join(
-        "tests", "test_files", "fonts", "NotoSans-Regular.ttf"
-    )
+    notouch_inpath = os.path.join("tests", "test_files", "fonts", "NotoSans-Regular.ttf")
     test_inpath = os.path.join(
         "tests", "test_files", "fonts", "temp", "NotoSans-Regular.ttf"
     )
@@ -118,6 +116,33 @@ def test_default_run_ubuntu():
 
     # test
     font_validator(test_outpath)
+
+    # tear down
+    shutil.rmtree(test_dir)
+
+
+def test_default_run_opensans_vf():
+    """This is used to test cvar table removal in a var font"""
+    test_dir = os.path.join("tests", "test_files", "fonts", "temp")
+    notouch_inpath = os.path.join("tests", "test_files", "fonts", "OpenSans-VF.ttf")
+    test_inpath = os.path.join("tests", "test_files", "fonts", "temp", "OpenSans.ttf")
+    test_outpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "OpenSans-dehinted.ttf"
+    )
+    test_args = [test_inpath]
+
+    # setup
+    if os.path.isdir(test_dir):
+        shutil.rmtree(test_dir)
+    os.mkdir(test_dir)
+    shutil.copyfile(notouch_inpath, test_inpath)
+
+    # execute
+    run(test_args)
+
+    # test
+    font_validator(test_outpath)
+    assert "cvar" not in TTFont(test_outpath)
 
     # tear down
     shutil.rmtree(test_dir)
@@ -265,9 +290,7 @@ def test_run_roboto_keep_prep():
 
 def test_run_noto_keep_ttfa():  # this has to be tested in Noto as it contains a TTFA table
     test_dir = os.path.join("tests", "test_files", "fonts", "temp")
-    notouch_inpath = os.path.join(
-        "tests", "test_files", "fonts", "NotoSans-Regular.ttf"
-    )
+    notouch_inpath = os.path.join("tests", "test_files", "fonts", "NotoSans-Regular.ttf")
     test_inpath = os.path.join(
         "tests", "test_files", "fonts", "temp", "NotoSans-Regular.ttf"
     )
@@ -381,9 +404,7 @@ def test_run_roboto_keep_gasp():
 
 def test_run_noto_keep_maxp():
     test_dir = os.path.join("tests", "test_files", "fonts", "temp")
-    notouch_inpath = os.path.join(
-        "tests", "test_files", "fonts", "NotoSans-Regular.ttf"
-    )
+    notouch_inpath = os.path.join("tests", "test_files", "fonts", "NotoSans-Regular.ttf")
     test_inpath = os.path.join(
         "tests", "test_files", "fonts", "temp", "NotoSans-Regular.ttf"
     )
@@ -471,9 +492,7 @@ def test_run_with_outfile_path_roboto():
 
 def test_run_with_outfile_path_noto():
     test_dir = os.path.join("tests", "test_files", "fonts", "temp")
-    notouch_inpath = os.path.join(
-        "tests", "test_files", "fonts", "NotoSans-Regular.ttf"
-    )
+    notouch_inpath = os.path.join("tests", "test_files", "fonts", "NotoSans-Regular.ttf")
     test_inpath = os.path.join(
         "tests", "test_files", "fonts", "temp", "NotoSans-Regular.ttf"
     )
@@ -515,9 +534,7 @@ def test_run_with_non_font_file():
 
 def test_run_dehinted_file_write_inplace():
     test_dir = os.path.join("tests", "test_files", "fonts", "temp")
-    notouch_inpath = os.path.join(
-        "tests", "test_files", "fonts", "NotoSans-Regular.ttf"
-    )
+    notouch_inpath = os.path.join("tests", "test_files", "fonts", "NotoSans-Regular.ttf")
     test_inpath = os.path.join(
         "tests", "test_files", "fonts", "temp", "NotoSans-Regular.ttf"
     )

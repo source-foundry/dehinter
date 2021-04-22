@@ -2,6 +2,7 @@ import os
 
 from dehinter.font import (
     is_truetype_font,
+    has_cvar_table,
     has_cvt_table,
     has_fpgm_table,
     has_gasp_table,
@@ -12,6 +13,7 @@ from dehinter.font import (
     has_vdmx_table,
 )
 from dehinter.font import (
+    remove_cvar_table,
     remove_cvt_table,
     remove_fpgm_table,
     remove_hdmx_table,
@@ -38,14 +40,23 @@ FILEPATH_DEHINTED_TTF_2 = os.path.join(
     "tests", "test_files", "fonts", "NotoSans-Regular-dehinted.ttf"
 )
 
-FILEPATH_HINTED_TTF_3 = os.path.join(
-    "tests", "test_files", "fonts", "Ubuntu-Regular.ttf"
-)
+FILEPATH_HINTED_TTF_3 = os.path.join("tests", "test_files", "fonts", "Ubuntu-Regular.ttf")
 
+FILEPATH_HINTED_TTF_VF = os.path.join("tests", "test_files", "fonts", "OpenSans-VF.ttf")
 
 # ========================================================
 # Utilities
 # ========================================================
+
+
+def test_has_cvar_table_true():
+    tt = TTFont(FILEPATH_HINTED_TTF_VF)
+    assert has_cvar_table(tt) is True
+
+
+def test_has_cvar_table_false():
+    tt = TTFont(FILEPATH_HINTED_TTF)
+    assert has_cvar_table(tt) is False
 
 
 def test_has_cvt_table_true():
@@ -134,6 +145,13 @@ def test_is_truetype_font_for_not_ttf():
 # ========================================================
 # OpenType table removal
 # ========================================================
+def test_delete_cvar_table():
+    tt = TTFont(FILEPATH_HINTED_TTF_VF)
+    assert ("cvar" in tt) is True
+    remove_cvar_table(tt)
+    assert ("cvar" in tt) is False
+
+
 def test_delete_cvt_table():
     tt = TTFont(FILEPATH_HINTED_TTF)
     assert ("cvt " in tt) is True
@@ -252,6 +270,14 @@ def test_remove_glyf_instructions_dehinted_font():
 # ========================================================
 def test_update_gasp_table():
     tt = TTFont(FILEPATH_HINTED_TTF)
+    assert update_gasp_table(tt) is True
+    assert tt["gasp"].gaspRange == {65535: 0x000A}
+
+
+def test_update_gasp_table_no_gasp():
+    # the Open Sans var font does not have a gasp table
+    # execution here adds one when not present
+    tt = TTFont(FILEPATH_HINTED_TTF_VF)
     assert update_gasp_table(tt) is True
     assert tt["gasp"].gaspRange == {65535: 0x000A}
 
