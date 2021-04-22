@@ -3,6 +3,11 @@ all: install
 black:
 	black lib/dehinter/*.py
 
+import-sort:
+	isort lib/dehinter/*.py
+
+format: import-sort black
+
 clean:
 	- rm dist/*.whl dist/*.tar.gz dist/*.zip
 
