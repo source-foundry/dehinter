@@ -80,7 +80,8 @@ def is_truetype_font(filepath: Union[bytes, str, "os.PathLike[str]"]) -> bool:
 
 
 def is_variable_font(tt) -> bool:
-    """Tests for the presence of a fvar table to confirm that a file is a variable font."""
+    """Tests for the presence of a fvar table to confirm that a file is
+    a variable font."""
     return "fvar" in tt
 
 
