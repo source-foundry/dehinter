@@ -13,7 +13,7 @@ AUTHOR = "Source Foundry Authors and Contributors"
 REQUIRES_PYTHON = ">=3.6.0"
 
 INSTALL_REQUIRES = [
-    "fontTools==4.22.0",
+    "fontTools==4.22.1",
 ]
 # Optional packages
 EXTRAS_REQUIRES = {
