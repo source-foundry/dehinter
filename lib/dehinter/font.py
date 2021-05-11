@@ -14,11 +14,120 @@
 
 import array
 import os
+import pprint
+import sys
 from typing import Union
 
 from fontTools import ttLib  # type: ignore
 
 from dehinter.bitops import clear_bit_k, is_bit_k_set
+
+# instantiate pretty printer
+pp = pprint.PrettyPrinter(indent=4)
+
+
+# ========================================================
+# Core dehinting routine
+# ========================================================
+def dehint(tt,
+           keep_cvar=False,
+           keep_cvt=False,
+           keep_fpgm=False,
+           keep_gasp=False,
+           keep_glyf=False,
+           keep_hdmx=False,
+           keep_head=False,
+           keep_ltsh=False,
+           keep_maxp=False,
+           keep_prep=False,
+           keep_ttfa=False,
+           keep_vdmx=False,
+           verbose=True):
+    def report_actions(table, has_table):
+        if not has_table:
+            print("[-] Removed {table} table")
+        else:  # pragma: no cover
+            sys.stderr.write(
+                f"[!] Error: failed to remove {table} table from font{os.linesep}"
+            )
+
+    if is_variable_font(tt) and not keep_cvar:
+        if has_cvar_table(tt):
+            remove_cvar_table(tt)
+            if verbose:
+                report_actions("cvar", has_cvar_table(tt))
+
+    if not keep_cvt:
+        if has_cvt_table(tt):
+            remove_cvt_table(tt)
+            if verbose:
+                report_actions("cvt", has_cvt_table(tt))
+
+    if not keep_fpgm:
+        if has_fpgm_table(tt):
+            remove_fpgm_table(tt)
+            if verbose:
+                report_actions("fpgm", has_fpgm_table(tt))
+
+    if not keep_hdmx:
+        if has_hdmx_table(tt):
+            remove_hdmx_table(tt)
+            if verbose:
+                report_actions("hdmx", has_hdmx_table(tt))
+
+    if not keep_ltsh:
+        if has_ltsh_table(tt):
+            remove_ltsh_table(tt)
+            if verbose:
+                report_actions("LTSH", has_ltsh_table(tt))
+
+    if not keep_prep:
+        if has_prep_table(tt):
+            remove_prep_table(tt)
+            if verbose:
+                report_actions("prep", has_prep_table(tt))
+
+    if not keep_ttfa:
+        if has_ttfa_table(tt):
+            remove_ttfa_table(tt)
+            if verbose:
+                report_actions("ttfa", has_ttfa_table(tt))
+
+    if not keep_vdmx:
+        if has_vdmx_table(tt):
+            remove_vdmx_table(tt)
+            if verbose:
+                report_actions("VDMX", has_vdmx_table(tt))
+
+    #  (2) Remove glyf table instruction set bytecode
+    if not keep_glyf:
+        number_glyfs_edited = remove_glyf_instructions(tt)
+        if number_glyfs_edited > 0:
+            if verbose:
+                print(
+                    f"[-] Removed glyf table instruction bytecode from "
+                    f"{number_glyfs_edited} glyphs"
+                )
+
+    #  (3) Edit gasp table
+    if not keep_gasp:
+        if update_gasp_table(tt):
+            gasp_string = pp.pformat(tt["gasp"].__dict__)
+            if verbose:
+                print(f"[Δ] New gasp table values:{os.linesep}    {gasp_string}")
+
+    #  (4) Edit maxp table
+    if not keep_maxp:
+        if update_maxp_table(tt):
+            maxp_string = pp.pformat(tt["maxp"].__dict__)
+            if verbose:
+                print(f"[Δ] New maxp table values:{os.linesep}    {maxp_string}")
+
+    #  (5) Edit head table flags to clear bit 4
+    if not keep_head:
+        if update_head_table_flags(tt):
+            if verbose:
+                print("[Δ] Cleared bit 4 in head table flags")
 
 
 # ========================================================
