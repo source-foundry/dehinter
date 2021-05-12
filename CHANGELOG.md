@@ -1,7 +1,10 @@
 # Changelog
 
 ## v3.1.0
+
 - add a `dehinter.font.dehint` function to be used by programs that import dehinter as a module
+- add `--quiet` flag to suppress standard output reporting
+- update fonttools dependency to v4.22.1
 
 ## v3.0.0
 
