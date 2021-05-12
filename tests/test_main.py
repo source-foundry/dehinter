@@ -39,7 +39,7 @@ def font_validator(filepath):
     assert (tt["head"].flags & 1 << 4) == 0
 
 
-def test_default_run_roboto():
+def test_default_run_roboto(capsys):
     test_dir = os.path.join("tests", "test_files", "fonts", "temp")
     notouch_inpath = os.path.join("tests", "test_files", "fonts", "Roboto-Regular.ttf")
     test_inpath = os.path.join(
@@ -58,6 +58,8 @@ def test_default_run_roboto():
 
     # execute
     run(test_args)
+    captured = capsys.readouterr()
+    assert "Saved dehinted font as" in captured.out
 
     # test
     font_validator(test_outpath)
@@ -536,6 +538,35 @@ def test_run_with_outfile_path_noto():
 
     # execute
     run(test_args)
+
+    # test
+    font_validator(test_outpath)
+
+    # tear down
+    shutil.rmtree(test_dir)
+
+
+def test_default_run_roboto_quiet_flag_stdout_test(capsys):
+    test_dir = os.path.join("tests", "test_files", "fonts", "temp")
+    notouch_inpath = os.path.join("tests", "test_files", "fonts", "Roboto-Regular.ttf")
+    test_inpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "Roboto-Regular.ttf"
+    )
+    test_outpath = os.path.join(
+        "tests", "test_files", "fonts", "temp", "Roboto-Regular-dehinted.ttf"
+    )
+    test_args = ["--quiet", test_inpath]
+
+    # setup
+    if os.path.isdir(test_dir):
+        shutil.rmtree(test_dir)
+    os.mkdir(test_dir)
+    shutil.copyfile(notouch_inpath, test_inpath)
+
+    # execute
+    run(test_args)
+    captured = capsys.readouterr()
+    assert captured.out == ""
 
     # test
     font_validator(test_outpath)
