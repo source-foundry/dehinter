@@ -60,6 +60,7 @@ def run(argv: List[str]) -> None:
     parser.add_argument(
         "--keep-head", help="do not modify head table", action="store_true"
     )
+    parser.add_argument("--quiet", help="silence standard output", action="store_true")
     parser.add_argument("INFILE", help="in file path (hinted font)")
 
     args = parser.parse_args(argv)
@@ -105,6 +106,8 @@ def run(argv: List[str]) -> None:
         )
         sys.exit(1)
 
+    use_verbose_output = not args.quiet
+
     dehint(
         tt,
         keep_cvar=args.keep_cvar,
@@ -119,7 +122,7 @@ def run(argv: List[str]) -> None:
         keep_prep=args.keep_prep,
         keep_ttfa=args.keep_ttfa,
         keep_vdmx=args.keep_vdmx,
-        verbose=True,
+        verbose=use_verbose_output,
     )
 
     # File write
@@ -134,7 +137,8 @@ def run(argv: List[str]) -> None:
 
     try:
         tt.save(outpath)
-        print(f"{os.linesep}[+] Saved dehinted font as '{outpath}'")
+        if use_verbose_output:
+            print(f"{os.linesep}[+] Saved dehinted font as '{outpath}'")
     except Exception as e:  # pragma: no cover
         sys.stderr.write(
             f"[!] Error: Unable to save dehinted font file: {str(e)}{os.linesep}"
@@ -142,10 +146,11 @@ def run(argv: List[str]) -> None:
 
     # File size comparison
     # --------------------
-    infile_size_tuple = get_filesize(args.INFILE)
-    outfile_size_tuple = get_filesize(
-        outpath
-    )  # depends on outpath definition defined during file write
-    print(f"{os.linesep}[*] File sizes:")
-    print(f"    {infile_size_tuple[0]}{infile_size_tuple[1]} (hinted)")
-    print(f"    {outfile_size_tuple[0]}{outfile_size_tuple[1]} (dehinted)")
+    if use_verbose_output:
+        infile_size_tuple = get_filesize(args.INFILE)
+        outfile_size_tuple = get_filesize(
+            outpath
+        )  # depends on outpath definition defined during file write
+        print(f"{os.linesep}[*] File sizes:")
+        print(f"    {infile_size_tuple[0]}{infile_size_tuple[1]} (hinted)")
+        print(f"    {outfile_size_tuple[0]}{outfile_size_tuple[1]} (dehinted)")
