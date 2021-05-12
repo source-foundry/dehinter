@@ -1,5 +1,8 @@
 # Changelog
 
+## v3.1.0
+- add a `dehinter.font.dehint` function to be used by programs that import dehinter as a module
+
 ## v3.0.0
 
 - add support for cvar table removal in variable fonts (backward incompatible change)
