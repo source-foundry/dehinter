@@ -45,7 +45,7 @@ def dehint(tt,
            verbose=True):
     def report_actions(table, has_table):
         if not has_table:
-            print("[-] Removed {table} table")
+            print(f"[-] Removed {table} table")
         else:  # pragma: no cover
             sys.stderr.write(
                 f"[!] Error: failed to remove {table} table from font{os.linesep}"
