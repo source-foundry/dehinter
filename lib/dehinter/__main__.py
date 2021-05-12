@@ -20,8 +20,7 @@ from typing import List
 from fontTools.ttLib import TTFont  # type: ignore
 
 from dehinter import __version__
-from dehinter.font import (dehint,
-                           is_truetype_font)
+from dehinter.font import dehint, is_truetype_font
 from dehinter.paths import filepath_exists, get_default_out_path
 from dehinter.system import get_filesize
 
@@ -106,20 +105,22 @@ def run(argv: List[str]) -> None:
         )
         sys.exit(1)
 
-    dehint(tt,
-           keep_cvar=args.keep_cvar,
-           keep_cvt=args.keep_cvt,
-           keep_fpgm=args.keep_fpgm,
-           keep_gasp=args.keep_gasp,
-           keep_glyf=args.keep_glyf,
-           keep_hdmx=args.keep_hdmx,
-           keep_head=args.keep_head,
-           keep_ltsh=args.keep_ltsh,
-           keep_maxp=args.keep_maxp,
-           keep_prep=args.keep_prep,
-           keep_ttfa=args.keep_ttfa,
-           keep_vdmx=args.keep_vdmx,
-           verbose=True)
+    dehint(
+        tt,
+        keep_cvar=args.keep_cvar,
+        keep_cvt=args.keep_cvt,
+        keep_fpgm=args.keep_fpgm,
+        keep_gasp=args.keep_gasp,
+        keep_glyf=args.keep_glyf,
+        keep_hdmx=args.keep_hdmx,
+        keep_head=args.keep_head,
+        keep_ltsh=args.keep_ltsh,
+        keep_maxp=args.keep_maxp,
+        keep_prep=args.keep_prep,
+        keep_ttfa=args.keep_ttfa,
+        keep_vdmx=args.keep_vdmx,
+        verbose=True,
+    )
 
     # File write
     # ----------
