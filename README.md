@@ -10,7 +10,7 @@
 
 ## About
 
-`dehinter` is a Python command line application that removes TrueType instruction sets, global hinting tables, and other associated OpenType table data in font files. The tool provides cross-platform support on macOS, Windows, and Linux systems with a Python v3.6+ interpreter.
+`dehinter` is a Python command line application that removes TrueType instruction sets, global hinting tables, and other associated OpenType table data in font files. The tool provides cross-platform support on macOS, Windows, and Linux systems with a Python v3.7+ interpreter.
 
 ## What it does
 
@@ -26,7 +26,7 @@ Options allow you to maintain the original version of any of these tables.
 
 ## Installation
 
-`dehinter` requires a Python 3.6+ interpreter.
+`dehinter` requires a Python 3.7+ interpreter.
 
 Installation in a [Python3 virtual environment](https://docs.python.org/3/library/venv.html) is recommended as dependencies are pinned to versions that are confirmed to work with this project.
 

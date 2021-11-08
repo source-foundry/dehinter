@@ -1,5 +1,12 @@
 # Changelog
 
+## v4.0.0
+
+- remove Python 3.6 support (this was eliminated in our fontTools dependency)
+- update fonttools dependency to v4.28.1
+- update GitHub Actions CI workflow to include Python 3.10 testing
+- update GitHub Actions workflows to use cPython 3.10 runner by default
+
 ## v3.1.0
 
 - add a `dehinter.font.dehint` function to be used by programs that import dehinter as a module
