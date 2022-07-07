@@ -4,4 +4,4 @@
 #
 #    pip-compile
 #
-fonttools==4.33.3         # via dehinter (setup.py)
+fonttools==4.34.2         # via dehinter (setup.py)
